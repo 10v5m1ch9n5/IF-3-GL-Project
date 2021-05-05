@@ -42,10 +42,10 @@ int Sensor::getUserID()
     return userID;
 }
 
-map<Measure> getMeasure()
+/*map<Measure> getMeasure()
 {
 
-}
+}*/
 
 //-------------------------------------------- Constructeurs - destructeur
 

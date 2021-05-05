@@ -57,12 +57,12 @@ public:
     // Contrat :
     //
 
-    map<Measure> getMeasure();
+   /* map<Measure> getMeasure();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
     // Contrat :
-    //
+    //*/
 
 //------------------------------------------------- Surcharge d'opérateurs
 
