@@ -44,7 +44,7 @@ int Sensor::getUserID()
     return userID;
 }
 
- map<Measure, string> Sensor::getMeasure()
+ map<string, Measure> Sensor::getMeasure()
  {
     return measureList;
 }

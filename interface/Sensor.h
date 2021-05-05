@@ -57,7 +57,7 @@ public:
     // Contrat :
     //
 
-   map<Measure, string> getMeasure();
+   map<string, Measure> getMeasure();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
@@ -93,7 +93,7 @@ private:
     int latitude;
     int longitude;
     int userID;
-    map<Measure,string> measureList;
+    map<string,Measure> measureList;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Sensor>
