@@ -10,6 +10,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <map>
+#include "Measure.h"
 
 using namespace std;
 //------------------------------------------------------------- Constantes
@@ -56,6 +57,12 @@ public:
     // Contrat :
     //
 
+    map<Measure> getMeasure();
+    // void type Méthode ( liste des paramètres );
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
 
 //------------------------------------------------- Surcharge d'opérateurs
 
@@ -85,7 +92,7 @@ private:
     string sensorID;
     int latitude;
     int longitude;
-    int userID
+    int userID;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Sensor>
