@@ -57,13 +57,13 @@ Sensor:: ~Sensor()
 
 }
 
-Sensor::Sensor(string sid, int lat, int lon, int uid)
+Sensor::Sensor(string sensorID, int latitude, int longitude, int userID)
 {
     #ifdef MAP
         cout << "Appel au constructeur de Sensor" << endl;
     #endif
-    sensorID = sid;
-    latitude = lat;
-    longitude = lon;
-    userID = uid;
+    this->sensorID = sensorID;
+    this->latitude = latitude;
+    this->longitude = longitude;
+    this->userID = userID;
 }
