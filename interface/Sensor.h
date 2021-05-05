@@ -3,7 +3,7 @@
 //
 
 
-//---------- Interface de la classe <SENSORr> (fichier Sensor.h) ----------------
+//---------- Interface de la classe <SENSOR> (fichier Sensor.h) ----------------
 #if ! defined ( SENSOR_H )
 #define SENSOR_H
 
@@ -26,14 +26,14 @@ class Sensor
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    string getLatitude();
+    int getLatitude();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    string getLongitude();
+    int getLongitude();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
@@ -47,7 +47,7 @@ public:
     // Contrat :
     //
 
-    string getUserID();
+    int getUserID();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
@@ -78,7 +78,7 @@ private:
 
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
-    String SensorID;
+    string SensorID;
     int Latitude;
     int Longitude;
     int UserID
