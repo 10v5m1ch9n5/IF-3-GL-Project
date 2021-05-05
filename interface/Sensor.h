@@ -85,7 +85,7 @@ private:
     string sensorID;
     int latitude;
     int longitude;
-    int userID
+    int userID;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Sensor>
