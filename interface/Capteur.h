@@ -4,9 +4,21 @@
 
 #ifndef IF_3_GL_PROJECT_CAPTEUR_H
 #define IF_3_GL_PROJECT_CAPTEUR_H
+#include <string>
+
+
+class Capteur{
+    public:
+    private:
+        String SensorID;
+        int Latitude;
+        int Longitude;
+        int UserID
 
 
 
+
+};
 
 
 
