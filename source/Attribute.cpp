@@ -14,6 +14,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "../interface/Attribute.h"
+#include "../interface/Measure.h"
 
 using namespace std;
 
@@ -52,7 +53,7 @@ Attribute:: ~Attribute ( )
   	
 }
 
-Attribute::Attribute (string id, string unit, string description, Measure measure)
+Attribute::Attribute (string id, string unit, string description, Measure * measure)
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de Attribute" << endl;
