@@ -14,6 +14,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "../interface/Measure.h"
+#include "../interface/sensor.h"
 
 using namespace std;
 
@@ -47,9 +48,9 @@ float Measure::getValue()
 }
 
 
-int Measure::compare()
+float Measure::compare(float otherValue)
 {
-
+    return value - otherValue;
 }
     
 //-------------------------------------------- Constructeurs - destructeur
