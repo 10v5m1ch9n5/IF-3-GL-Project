@@ -1,12 +1,12 @@
 /*************************************************************************
-                           Catalogue  -  description
+                           AirCleaner  -  description
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation de la classe <Catalogue> (fichier Catalogue.cpp) ------------
+//---------- Réalisation de la classe <AirCleaner> (fichier AirCleaner.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
