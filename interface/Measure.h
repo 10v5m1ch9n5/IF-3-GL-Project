@@ -47,7 +47,7 @@ public:
     // Contrat : 
     //
 
-    Attribute getAttribute();
+    Attribute * getAttribute();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //

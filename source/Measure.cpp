@@ -36,7 +36,7 @@ string Measure::getTimeStamp()
     return timeStamp;
 }
 
-Attribute Measure::getAttribute()
+Attribute * Measure::getAttribute()
 {
     return myAttribute;
 }
@@ -58,7 +58,7 @@ Measure:: ~Measure ( )
 	#ifdef MAP
 	cout << "Appel au destructeur de Measure" << endl;
 	#endif
-  	delete(myAttribute)
+  	delete(myAttribute);
 }
 
 Measure::Measure (string id, string time, float value, string attributeId, string unit, string description)
