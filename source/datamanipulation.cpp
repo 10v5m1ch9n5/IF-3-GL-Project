@@ -71,11 +71,11 @@ Catalogue::Catalogue ()
 	#ifdef MAP
 	cout << "Appel au constructeur de Catalogue" << endl;
 	#endif
-
+    this->myListAirCleaner= new map<string, AirCleaner>;
     
     string line;
     
-    ifstream cleanersfile ("./dataset/cleaners.csv");
+    ifstream cleanersfile ("../dataset/cleaners.csv");
     string id, lat,longi,start,stop,nomEntreprise;
     int i=0;
     if (cleanersfile.is_open())
@@ -103,6 +103,11 @@ Catalogue::Catalogue ()
                     case 4:
                        nomEntreprise=line;
                        cout<< id <<" cc"<<lat<< " "<< longi<<" "<<start<<" "<< nomEntreprise<< endl;
+                       AirCleaner myairclean= new AirCleaner (id, lat, longi,start, stop,nomEntreprise);
+                       this->myListAirCleaner.insert(std::pair<string,AirCleaner>(id,myairclean))
+
+                       new 
+                       new 
                         break;
                     default:
                         cout<<"error"<<endl;
