@@ -1,7 +1,6 @@
 TARGET  := AirWatcher
 INCLUDE := interface
 SOURCE  := source
-BUILD   := build
 
 CC := g++
 CXXFLAGS := -ansi -pedantic -Wall -std=c++11
@@ -12,7 +11,7 @@ CPPFILES := $(notdir $(wildcard $(SOURCE)/*.cpp))
 HFILES   := $(wildcard $(CURDIR)/$(INCLUDE)/*.h)
 OFILES   := $(CPPFILES:%.cpp=%.o)
 
-VPATH := $(SOURCE)
+VPATH := $(CURDIR)/$(SOURCE)
 
 
 $(TARGET).out : $(OFILES)
