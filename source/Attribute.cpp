@@ -14,7 +14,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "../interface/Attribute.h"
-#include "../interface/Measure.h"
+
 
 using namespace std;
 
