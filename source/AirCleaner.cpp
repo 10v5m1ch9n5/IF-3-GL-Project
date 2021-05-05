@@ -58,7 +58,7 @@ AirCleaner:: ~AirCleaner ( )
   	
 }
 
-AirCleaner::AirCleaner (string id, string lat, string longi, string start, string stop)
+AirCleaner::AirCleaner (string id, string lat, string longi, string start, string stop,string nomEntreprise)
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de AirCleaner" << endl;
@@ -68,6 +68,7 @@ AirCleaner::AirCleaner (string id, string lat, string longi, string start, strin
     longitude=longi;
     timeStampStop=stop;
     timeStampStart=start;
+    this->nomEntreprise=nomEntreprise;
 }
 //------------------------------------------------------------------ PRIVE
 
