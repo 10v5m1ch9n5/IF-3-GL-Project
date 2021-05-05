@@ -9,7 +9,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce93b11d-15e3-481d-b4a3-b8a673239b9b" name="Default Changelist" comment="" />
+    <list default="true" id="ce93b11d-15e3-481d-b4a3-b8a673239b9b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/interface/Capteur.h" beforeDir="false" afterPath="$PROJECT_DIR$/interface/Capteur.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +60,7 @@
       <option name="presentableId" value="Default" />
       <updated>1620220323332</updated>
       <workItem from="1620220325696" duration="680000" />
+      <workItem from="1620221011426" duration="330000" />
     </task>
     <task id="LOCAL-00001" summary="fxyfx">
       <created>1620220401306</created>
@@ -66,7 +69,21 @@
       <option name="project" value="LOCAL" />
       <updated>1620220401306</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="stabel version">
+      <created>1620221029555</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1620221029555</updated>
+    </task>
+    <task id="LOCAL-00003" summary="stabel version">
+      <created>1620221183814</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1620221183814</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -82,9 +99,11 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fxyfx" />
-    <option name="LAST_COMMIT_MESSAGE" value="fxyfx" />
+    <MESSAGE value="stabel version" />
+    <option name="LAST_COMMIT_MESSAGE" value="stabel version" />
   </component>
 </project>
