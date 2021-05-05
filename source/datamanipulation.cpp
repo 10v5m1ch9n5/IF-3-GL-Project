@@ -72,18 +72,48 @@ Catalogue::Catalogue ()
 	cout << "Appel au constructeur de Catalogue" << endl;
 	#endif
 
+    
     string line;
     
-    ifstream cleanersfile ("../dataset/cleaners.csv");
-    if (myfile.is_open())
+    ifstream cleanersfile ("./dataset/cleaners.csv");
+    string id, lat,longi,start,stop,nomEntreprise;
+    int i=0;
+    if (cleanersfile.is_open())
     {
-        while ( getline (myfile,line) )
-        {
-            
-        cout << line << '\n';
-        }
-        myfile.close();
+            while ( getline (cleanersfile,line,';'))
+            {
+               
+                if (line != "\n" && line !=""){
+                    line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+                } 
+                switch ( i )
+                {
+                    case 0:
+                        id=line;
+                        break;
+                    case 1:
+                        lat=line;
+                        break;
+                    case 2:
+                        longi=line;
+                        break;
+                    case 3:
+                       start=line;
+                        break;
+                    case 4:
+                       nomEntreprise=line;
+                       cout<< id <<" cc"<<lat<< " "<< longi<<" "<<start<<" "<< nomEntreprise<< endl;
+                        break;
+                    default:
+                        cout<<"error"<<endl;
+                        break;
+                }
+                i=(i+1)%5;
+                
+            }
+               cleanersfile.close();
         
+     
     }else cout << "Unable to open file"; 
     
   	

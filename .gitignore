@@ -12,7 +12,7 @@
 *.pch
 *.idea
 maintest.cpp
-maaintest
+maintest
 # Compiled Dynamic libraries
 *.so
 *.dylib
