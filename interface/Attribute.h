@@ -63,7 +63,7 @@ public:
     // Contrat :
     //
 
-    Attribute (string id, string unit, string description, Measure measure);
+    Attribute (string id, string unit, string description, Measure * measure);
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 
@@ -80,7 +80,7 @@ private:
     string attributeId;
     string unit;
     string description;
-    Measure measure;
+    Measure * measure;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Attribute>
