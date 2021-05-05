@@ -67,7 +67,7 @@ public:
     // Contrat :
     //
 
-    AirCleaner (string id, string lat, string longi, string start, string stop);
+    AirCleaner (string id, string lat, string longi, string start, string stop, string nomEntreprise);
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 
@@ -86,6 +86,7 @@ private:
     string longitude;
     string timeStampStart;
     string timeStampStop;
+    string nomEntreprise;
 };
 
 //-------------------------------- Autres définitions dépendantes de <AirCleaner>

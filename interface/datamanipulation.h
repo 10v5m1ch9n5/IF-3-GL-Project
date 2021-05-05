@@ -14,7 +14,7 @@
 #include <string>
 #include <map>
 
-#include "Captor.h"
+#include "Sensor.h"
 #include "IndividualPerson.h"
 #include "AirCleaner.h"
 //------------------------------------------------------------- Constantes
