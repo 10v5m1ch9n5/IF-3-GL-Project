@@ -26,7 +26,7 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-void Catalogue::verifyAreaAirQuality(string longitude, string latitude)
+void Catalogue::verifyAreaAirQuality(string longitude, string latitude, string radius)
 {
 } // ----- 
 
@@ -34,9 +34,27 @@ void Catalogue::verifyPointAirQuality(string longitude, string latitude)
 {
 } // ----- 
 
-void Catalogue::verifyAreaAirQuality(string longitude, string latitude)
+void Catalogue::verifySensorAirQuality(string censorId)
+
 {
 } // ----- 
+
+void Catalogue::listAllSensor() const
+
+{
+} // ----- 
+
+void Catalogue::checkImpactAirCleaner(string airCleanerId)
+
+{
+} // ----- 
+
+void Catalogue::checkReliability(string userId)
+
+{
+} // ----- 
+
+
 //-------------------------------------------- Constructeurs - destructeur
 datamanipulation:: ~datamanipulation ( )
 {
