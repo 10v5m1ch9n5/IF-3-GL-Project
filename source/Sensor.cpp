@@ -10,6 +10,8 @@
 
 //------------------------------------------------------ Include personnel
 #include "../interface/Sensor.h"
+#include "../interface/Measure.h"
+#include <map>
 
 using namespace std;
 
@@ -42,10 +44,10 @@ int Sensor::getUserID()
     return userID;
 }
 
-/*map<Measure> getMeasure()
-{
-
-}*/
+ map<Measure, string> Sensor::getMeasure()
+ {
+    return measureList;
+}
 
 //-------------------------------------------- Constructeurs - destructeur
 
