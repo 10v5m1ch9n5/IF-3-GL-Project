@@ -12,7 +12,6 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-
 #include "Measure.h"
 using namespace std;
 //------------------------------------------------------------- Constantes

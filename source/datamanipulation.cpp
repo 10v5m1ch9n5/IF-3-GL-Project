@@ -28,30 +28,30 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-void Catalogue::verifyAreaAirQuality(string longitude, string latitude, string radius)
+void datamanipulation::verifyAreaAirQuality(string longitude, string latitude, string radius)
 {
 } // ----- 
 
-void Catalogue::verifyPointAirQuality(string longitude, string latitude)
+void datamanipulation::verifyPointAirQuality(string longitude, string latitude)
 {
 } // ----- 
 
-void Catalogue::verifySensorAirQuality(string censorId)
-
-{
-} // ----- 
-
-void Catalogue::listAllSensor() const
+void datamanipulation::verifySensorAirQuality(string censorId)
 
 {
 } // ----- 
 
-void Catalogue::checkImpactAirCleaner(string airCleanerId)
+void datamanipulation::listAllSensor() const
 
 {
 } // ----- 
 
-void Catalogue::checkReliability(string userId)
+void datamanipulation::checkImpactAirCleaner(string airCleanerId)
+
+{
+} // ----- 
+
+void datamanipulation::checkReliability(string userId)
 
 {
 } // ----- 
@@ -66,7 +66,7 @@ datamanipulation:: ~datamanipulation ( )
   	
 }
 
-Catalogue::Catalogue ()
+datamanipulation::datamanipulation ()
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de Catalogue" << endl;
@@ -104,7 +104,7 @@ Catalogue::Catalogue ()
                        nomEntreprise=line;
                        cout<< id <<" cc"<<lat<< " "<< longi<<" "<<start<<" "<< nomEntreprise<< endl;
                        AirCleaner myairclean= new AirCleaner (id, lat, longi,start, stop,nomEntreprise);
-                       this->myListAirCleaner.insert(std::pair<string,AirCleaner>(id,myairclean))
+                       this->myListAirCleaner.insert(std::pair<string,AirCleaner>(id,myairclean));
 
                        new 
                        new 
