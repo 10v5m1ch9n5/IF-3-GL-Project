@@ -102,8 +102,7 @@ Datamanipulation::Datamanipulation ()
                         break;
                     case 4:
                         nomEntreprise=line;
-                        cout<< id <<" cc"<<lat<< " "<< longi<<" "<<start<<" "<< nomEntreprise<< endl;
-                        
+                        cout<< id <<" cc"<<lat<< " "<< longi<<" "<<start<<" "<< nomEntreprise<< endl;  
                         this->myListAirCleaner.insert(std::pair<string,AirCleaner*>(id,new AirCleaner (id, lat, longi,start, stop,nomEntreprise)));
                         break;
                     default:
