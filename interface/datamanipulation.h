@@ -99,7 +99,7 @@ protected:
   
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
-  std::map<string,Captor> myListCaptors;
+  std::map<string,Sensor> myListCaptors;
   std::map<string,AirCleaner> myListAirCleaner;
   //std::map<string,IndividualPerson> myListIndividualPerson;
 

@@ -61,7 +61,7 @@ public:
     // Contrat : 
     //
 
-    int compare();
+    float compare(float value);
 //------------------------------------------------- Surcharge d'opérateurs
 
 
