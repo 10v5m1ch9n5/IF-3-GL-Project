@@ -14,7 +14,7 @@
 #include <string>
 #include <map>
 
-#include "Sensor.h"
+//#include "Sensor.h"
 //#include "IndividualPerson.h"
 #include "AirCleaner.h"
 //------------------------------------------------------------- Constantes
@@ -99,7 +99,7 @@ protected:
   
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
-  std::map<string,Sensor> myListCaptors;
+  //std::map<string,Sensor> myListCaptors;
   std::map<string,AirCleaner> myListAirCleaner;
   //std::map<string,IndividualPerson> myListIndividualPerson;
 

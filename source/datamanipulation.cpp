@@ -28,37 +28,37 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-void datamanipulation::verifyAreaAirQuality(string longitude, string latitude, string radius)
+void Datamanipulation::verifyAreaAirQuality(string longitude, string latitude, string radius)
 {
 } // ----- 
 
-void datamanipulation::verifyPointAirQuality(string longitude, string latitude)
+void Datamanipulation::verifyPointAirQuality(string longitude, string latitude)
 {
 } // ----- 
 
-void datamanipulation::verifySensorAirQuality(string censorId)
-
-{
-} // ----- 
-
-void datamanipulation::listAllSensor() const
+void Datamanipulation::verifySensorAirQuality(string censorId)
 
 {
 } // ----- 
 
-void datamanipulation::checkImpactAirCleaner(string airCleanerId)
+void Datamanipulation::listAllSensor() const
 
 {
 } // ----- 
 
-void datamanipulation::checkReliability(string userId)
+void Datamanipulation::checkImpactAirCleaner(string airCleanerId)
+
+{
+} // ----- 
+
+void Datamanipulation::checkReliability(string userId)
 
 {
 } // ----- 
 
 
 //-------------------------------------------- Constructeurs - destructeur
-datamanipulation:: ~datamanipulation ( )
+Datamanipulation:: ~datamanipulation ( )
 {
 	#ifdef MAP
 	cout << "Appel au destructeur de Catalogue" << endl;
@@ -66,7 +66,7 @@ datamanipulation:: ~datamanipulation ( )
   	
 }
 
-datamanipulation::datamanipulation ()
+Datamanipulation::datamanipulation ()
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de Catalogue" << endl;
