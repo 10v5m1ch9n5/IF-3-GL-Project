@@ -47,7 +47,7 @@ public:
     // Contrat : 
     //
 
-    Attribute getAttribute();
+    Attribute * getAttribute();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
@@ -73,7 +73,7 @@ public:
     // Contrat :
     //
 
-    Measure (string id, string time, float value);
+    Measure (string id, string time, float value, string attributeId, string unit, string description);
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 
@@ -90,7 +90,7 @@ private:
     string measureId;
     string timeStamp;
     float value;
-    Attribute myAttribute;
+    Attribute * myAttribute;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Measure>

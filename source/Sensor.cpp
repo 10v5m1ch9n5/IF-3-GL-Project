@@ -24,22 +24,27 @@ using namespace std;
 
 string Sensor::getSensorID()
 {
-    return sensorID
+    return sensorID;
 }
 
 int Sensor::getLatitude()
 {
-    return latitude
+    return latitude;
 }
 
 int Sensor::getLongitude()
 {
-    return longitude
+    return longitude;
 }
 
 int Sensor::getUserID()
 {
-    return userID
+    return userID;
+}
+
+map<Measure> getMeasure()
+{
+
 }
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -52,13 +57,13 @@ Sensor:: ~Sensor()
 
 }
 
-Sensor::Sensor(string sid, int lat, int lon, int uid)
+Sensor::Sensor(string sensorID, int latitude, int longitude, int userID)
 {
     #ifdef MAP
         cout << "Appel au constructeur de Sensor" << endl;
     #endif
-    sensorID = sid;
-    latitude = lat;
-    longitude = lon;
-    userID = uid;
+    this->sensorID = sensorID;
+    this->latitude = latitude;
+    this->longitude = longitude;
+    this->userID = userID;
 }
