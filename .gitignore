@@ -11,6 +11,8 @@
 *.gch
 *.pch
 *.idea
+maintest.cpp
+maaintest
 # Compiled Dynamic libraries
 *.so
 *.dylib

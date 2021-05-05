@@ -72,7 +72,17 @@ Catalogue::Catalogue ()
 	cout << "Appel au constructeur de Catalogue" << endl;
 	#endif
 
-    open
+    string line;
+    
+    ifstream cleanersfile ("../dataset/cleaners.csv");
+    if (myfile.is_open())
+    {
+        while ( getline (myfile,line) )
+        {
+        cout << line << '\n';
+        }
+        myfile.close();
+    }else cout << "Unable to open file"; 
     
   	
 }
