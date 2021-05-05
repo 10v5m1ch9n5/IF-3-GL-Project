@@ -11,6 +11,8 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
+#include <fstream>
+#include <iostream>
 
 //------------------------------------------------------ Include personnel
 #include "../interface/datamanipulation.h"
@@ -69,7 +71,9 @@ Catalogue::Catalogue ()
 	#ifdef MAP
 	cout << "Appel au constructeur de Catalogue" << endl;
 	#endif
-  
+
+    open
+    
   	
 }
 //------------------------------------------------------------------ PRIVE
