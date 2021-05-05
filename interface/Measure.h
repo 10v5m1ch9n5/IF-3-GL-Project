@@ -73,7 +73,7 @@ public:
     // Contrat :
     //
 
-    Measure (string id, string time, float value, string attributeId, string unit, string description);
+    Measure (string id, string time, float value, string attributeId, string unit, string description, Sensor * sensor);
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 
@@ -91,6 +91,7 @@ private:
     string timeStamp;
     float value;
     Attribute * myAttribute;
+    Sensor * mySensor;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Measure>
