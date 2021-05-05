@@ -8,6 +8,10 @@ int main()
 
     // Sensor 0
     dm.verifyPointAirQuality("44","-1");
-    // Reponse attendue :
+    // Reponse attendue pour le 2019-12-31 (date la plus récente)
+    // O3   -> 47.75 -> ATMO 2
+    // NO2  -> 73.25 -> ATMO 3
+    // SO2  -> 40.75 -> ATMO 2
+    // PM10 -> 45.75 -> ATMO 7
 }
 

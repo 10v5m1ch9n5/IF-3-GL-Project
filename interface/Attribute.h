@@ -12,7 +12,6 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
-#include "Measure.h"
 using namespace std;
 //------------------------------------------------------------- Constantes
 
@@ -62,7 +61,7 @@ public:
     // Contrat :
     //
 
-    Attribute (string id, string unit, string description, Measure * measure);
+    Attribute (string id, string unit, string description);
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 
@@ -79,7 +78,6 @@ private:
     string attributeId;
     string unit;
     string description;
-    Measure * measure;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Attribute>

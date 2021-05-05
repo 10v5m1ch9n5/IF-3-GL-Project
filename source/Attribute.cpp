@@ -53,7 +53,7 @@ Attribute:: ~Attribute ( )
   	
 }
 
-Attribute::Attribute (string id, string unit, string description, Measure * measure)
+Attribute::Attribute (string id, string unit, string description)
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de Attribute" << endl;
@@ -61,7 +61,6 @@ Attribute::Attribute (string id, string unit, string description, Measure * meas
     attributeId=id;
     this->unit=unit;
     this->description=description;
-    this->measure=measure;
 }
 //------------------------------------------------------------------ PRIVE
 
