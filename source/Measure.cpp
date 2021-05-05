@@ -1,19 +1,18 @@
 /*************************************************************************
-                           Attribute  -  description
+                           Measure  -  description
                              -------------------
     début                : $DATE$
     copyright            : (C) $YEAR$ par $AUTHOR$
     e-mail               : $EMAIL$
 *************************************************************************/
 
-//---------- Réalisation de la classe <Attribute> (fichier Attribute.cpp) ------------
+//---------- Réalisation de la classe <Measure> (fichier Measure.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
 
 //------------------------------------------------------ Include personnel
-#include "../interface/Attribute.h"
 #include "../interface/Measure.h"
 
 using namespace std;
@@ -27,41 +26,51 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-string Attribute::getAttributeId()
+string Measure::getMeasureId()
 {
-    return attributeId;
+    return measureId;
 }
-
     
-string Attribute::getUnit()
+string Measure::getTimeStamp()
 {
-    return unit;
+    return timeStamp;
+}
+
+Attribute Measure::getAttribute()
+{
+    return myAttribute;
+}
+
+float Measure::getValue()
+{
+    return value;
 }
 
 
-string Attribute::getDescription()
+int Measure::compare()
 {
-    return description;
-}
 
+}
+    
 //-------------------------------------------- Constructeurs - destructeur
-Attribute:: ~Attribute ( )
+Measure:: ~Measure ( )
 {
 	#ifdef MAP
-	cout << "Appel au destructeur de Attribute" << endl;
+	cout << "Appel au destructeur de Measure" << endl;
 	#endif
   	
 }
 
-Attribute::Attribute (string id, string unit, string description, Measure measure)
+Measure::Measure (string id, string time, float value)
 {
 	#ifdef MAP
-	cout << "Appel au constructeur de Attribute" << endl;
+	cout << "Appel au constructeur de Measure" << endl;
 	#endif
-    attributeId=id;
-    this->unit=unit;
-    this->description=description;
-    this->measure=measure;
+    measureId=id;
+    timeStamp=time;
+    this->value=value;
+
+    
 }
 //------------------------------------------------------------------ PRIVE
 
