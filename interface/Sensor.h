@@ -10,7 +10,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <map>
-#include "Measure.h"
+/*#include "Measure.h"*/
 
 using namespace std;
 //------------------------------------------------------------- Constantes
