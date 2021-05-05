@@ -9,6 +9,8 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <map>
+
 using namespace std;
 //------------------------------------------------------------- Constantes
 
@@ -53,6 +55,8 @@ public:
     //
     // Contrat :
     //
+    
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 
