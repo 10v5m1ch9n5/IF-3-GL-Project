@@ -42,6 +42,11 @@ int Sensor::getUserID()
     return userID;
 }
 
+map<Measure> getMeasure()
+{
+
+}
+
 //-------------------------------------------- Constructeurs - destructeur
 
 Sensor:: ~Sensor()
