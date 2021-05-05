@@ -24,22 +24,22 @@ using namespace std;
 
 string Sensor::getSensorID()
 {
-    return sensorID
+    return sensorID;
 }
 
 int Sensor::getLatitude()
 {
-    return latitude
+    return latitude;
 }
 
 int Sensor::getLongitude()
 {
-    return longitude
+    return longitude;
 }
 
 int Sensor::getUserID()
 {
-    return userID
+    return userID;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
