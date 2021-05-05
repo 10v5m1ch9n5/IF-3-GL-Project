@@ -44,9 +44,9 @@ int Sensor::getUserID()
     return userID;
 }
 
- map<Measure> getMeasure()
-{
-    return measuresList;
+ map<Measure, string> Sensor::getMeasure()
+ {
+    return measureList;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
