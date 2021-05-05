@@ -12,6 +12,11 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <map>
+
+#include "Captor.h"
+#include "IndividualPerson.h"
+#include "AirCleaner.h"
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types  
@@ -28,59 +33,42 @@ class Datamanipulation
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    void VerifyAirQuality(string ) { return liste; }
+    void verifyAreaAirQuality(string longitude, string latitude, string radius);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
     // Contrat : 
     //
     
-  	void newTrajet(Trajet * & trajet);
+  	void verifyPointAirQuality(string longitude, string latitude);
     // void type Méthode ( liste des paramètres );
-    // Mode d'emploi : ajoute un élément à la fin de la liste chainée de trajet
+    // Mode d'emploi : 
     //
     // Contrat : 
     //
     
-    void showCatalogue();
+    void verifySensorAirQuality(string censorId);
     // void type Méthode ( liste des paramètres );
-    // Mode d'emploi : utilise les méthodes toString de la classe trajet pour afficher les différents Trajets
+    // Mode d'emploi :
     //
     // Contrat : 
     //
     
-    void rechercherTrajet(char * lieuDepart, char * lieuArrive) const;
+    void listAllSensor() const;
     // void type Méthode ( liste des paramètres );
-    // Mode d'emploi : Compare les paramètres fournis en argument de la fonction avec les attributs de chaque chainon composant la liste chainée
+    // Mode d'emploi : 
     //
     // Contrat : 
     //
 
-    void rechercherTrajetAvance(Trajet ** chemin, int nbr, char * lieuDepart, char * lieuArrive);
+    void checkImpactAirCleaner(string airCleanerId);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
     // Contrat : 
     //
-    void import(int type, string lieuDepart, string lieuArrive, ifstream& input);
-    // void type Méthode ( liste des paramètres );
-    // Mode d'emploi : 
-    //
-    // Contrat : 
-    //
-    void exportDataAll(string dest);
-    // void type Méthode ( liste des paramètres );
-    // Mode d'emploi : 
-    //
-    // Contrat : 
-    //
-    void exportDataFilterByTrajet(int,string dest);
-    // void type Méthode ( liste des paramètres );
-    // Mode d'emploi : 
-    //
-    // Contrat : 
-    //
-    void exportDataaFilterByCity(string villeArrive, string villeDepart, string dest);
+
+    void checkReliability(string userId);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
@@ -111,7 +99,10 @@ protected:
   
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
-  ListeChaineeTrajet * liste;
+  std::map<string,Captor> myListCaptors;
+  std::map<string,AirCleaner> myListAirCleaner;
+  std::map<string,IndividualPerson> myListIndividualPerson;
+
 };
 
 //-------------------------------- Autres définitions dépendantes de <Catalogue>
