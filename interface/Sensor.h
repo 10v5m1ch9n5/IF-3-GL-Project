@@ -64,7 +64,7 @@ public:
     // Contrat :
     //
 
-    Sensor(string id, string lat, string longi, string start, string stop);
+    Sensor(string sensorID, int latitude, int longitude, int userID);
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
@@ -78,10 +78,10 @@ private:
 
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
-    string SensorID;
-    int Latitude;
-    int Longitude;
-    int UserID
+    string sensorID;
+    int latitude;
+    int longitude;
+    int userID
 };
 
 //-------------------------------- Autres définitions dépendantes de <Sensor>
