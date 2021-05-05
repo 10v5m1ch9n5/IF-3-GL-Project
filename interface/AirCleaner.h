@@ -29,14 +29,14 @@ class AirCleaner
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    string getLatitude();
+    int getLatitude();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
     // Contrat : 
     //
     
-  	string getLongitude();
+  	int getLongitude();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
@@ -67,7 +67,7 @@ public:
     // Contrat :
     //
 
-    AirCleaner (string id, string lat, string longi, string start, string stop, string nomEntreprise);
+    AirCleaner (string id, float lat, float longi, string start, string stop, string nomEntreprise);
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 
@@ -82,8 +82,8 @@ private:
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
     string cleanerId;
-    string latitude;
-    string longitude;
+    float latitude;
+    float longitude;
     string timeStampStart;
     string timeStampStop;
     string nomEntreprise;

@@ -1,9 +1,9 @@
 //
 // Created by lucas on 05/05/2021.
 //
-#include "../interface/datamanipulation.h"
+#include "../interface/DataManipulation.h"
 int main()
 {
-    Datamanipulation dm;
-    dm.verifyAreaAirQuality("","","")
+    DataManipulation dm;
+    dm.verifyAreaAirQuality("","","");
 }

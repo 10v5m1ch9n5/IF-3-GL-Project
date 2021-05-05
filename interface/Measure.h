@@ -14,7 +14,6 @@
 #include <string>
 
 #include "Attribute.h"
-#include "Sensor.h"
 
 using namespace std;
 //------------------------------------------------------------- Constantes
@@ -73,7 +72,7 @@ public:
     // Contrat :
     //
 
-    Measure (string id, string time, float value, string attributeId, string unit, string description, Sensor * sensor);
+    Measure (string id, string time, float value, string attributeId, string unit, string description);
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 
@@ -91,7 +90,6 @@ private:
     string timeStamp;
     float value;
     Attribute * myAttribute;
-    Sensor * mySensor;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Measure>

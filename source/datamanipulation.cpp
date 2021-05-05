@@ -15,7 +15,7 @@
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
-#include "../interface/datamanipulation.h"
+#include "../interface/DataManipulation.h"
 
 using namespace std;
 
@@ -28,37 +28,37 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-void Datamanipulation::verifyAreaAirQuality(string longitude, string latitude, string radius)
+void DataManipulation::verifyAreaAirQuality(string longitude, string latitude, string radius)
 {
 } // ----- 
 
-void Datamanipulation::verifyPointAirQuality(string longitude, string latitude)
+void DataManipulation::verifyPointAirQuality(string longitude, string latitude)
 {
 } // ----- 
 
-void Datamanipulation::verifySensorAirQuality(string censorId)
-
-{
-} // ----- 
-
-void Datamanipulation::listAllSensor() const
+void DataManipulation::verifySensorAirQuality(string censorId)
 
 {
 } // ----- 
 
-void Datamanipulation::checkImpactAirCleaner(string airCleanerId)
+void DataManipulation::listAllSensor() const
 
 {
 } // ----- 
 
-void Datamanipulation::checkReliability(string userId)
+void DataManipulation::checkImpactAirCleaner(string airCleanerId)
+
+{
+} // ----- 
+
+void DataManipulation::checkReliability(string userId)
 
 {
 } // ----- 
 
 
 //-------------------------------------------- Constructeurs - destructeur
-Datamanipulation:: ~Datamanipulation ( )
+DataManipulation:: ~DataManipulation ( )
 {
 	#ifdef MAP
 	cout << "Appel au destructeur de Catalogue" << endl;
@@ -66,7 +66,7 @@ Datamanipulation:: ~Datamanipulation ( )
   	
 }
 
-Datamanipulation::Datamanipulation ()
+DataManipulation::DataManipulation ()
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de Catalogue" << endl;
@@ -76,7 +76,8 @@ Datamanipulation::Datamanipulation ()
     string line;
     
     ifstream cleanersfile ("../dataset/cleaners.csv");
-    string id, lat,longi,start,stop,nomEntreprise;
+    string id, start,stop,nomEntreprise;
+    float lat, longi;
     int i=0;
     if (cleanersfile.is_open())
     {
@@ -84,7 +85,7 @@ Datamanipulation::Datamanipulation ()
             {
                
                 if (line != "\n" && line !=""){
-                    line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+                    //line.erase(remove(line.begin(), line.end(), '\n'), line.end());
                 } 
                 switch ( i )
                 {
@@ -92,13 +93,13 @@ Datamanipulation::Datamanipulation ()
                         id=line;
                         break;
                     case 1:
-                        lat=line;
+                        lat=stof(line);
                         break;
                     case 2:
-                        longi=line;
+                        longi=stof(line);
                         break;
                     case 3:
-                       start=line;
+                        start=line;
                         break;
                     case 4:
                         nomEntreprise=line;

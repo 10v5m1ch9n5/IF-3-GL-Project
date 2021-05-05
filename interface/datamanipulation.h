@@ -27,7 +27,7 @@
 // Contenir une liste chainée de trajet et pouvoir intéragir avec
 //------------------------------------------------------------------------
 
-class Datamanipulation
+class DataManipulation
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -79,13 +79,13 @@ public:
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    virtual ~Datamanipulation ( );
+    virtual ~DataManipulation ( );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    Datamanipulation ();
+    DataManipulation ();
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 

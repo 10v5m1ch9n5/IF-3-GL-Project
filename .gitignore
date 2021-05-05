@@ -36,3 +36,4 @@ maintest
 #CLion
 .idea
 .vscode/settings.json
+.vs

@@ -1,10 +1,10 @@
 //
 // Created by lucas on 05/05/2021.
 //
-#include "../interface/datamanipulation.h"
+#include "../interface/DataManipulation.h"
 int main()
 {
-    Datamanipulation dm;
+    DataManipulation dm;
 
     // Sensor 0
     dm.verifyPointAirQuality("44","-1");

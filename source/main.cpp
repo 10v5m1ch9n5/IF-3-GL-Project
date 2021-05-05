@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "../interface/Datamanipulation.cpp"
+#include "../interface/DataManipulation.h"
 using namespace std;
 
 int main()
 {
-    Datamanipulation= new Datamanipulation();
+    DataManipulation * test = new DataManipulation();
     return 0;
 }

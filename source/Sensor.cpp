@@ -10,7 +10,6 @@
 
 //------------------------------------------------------ Include personnel
 #include "../interface/Sensor.h"
-#include "../interface/Measure.h"
 #include <map>
 
 using namespace std;
@@ -44,8 +43,8 @@ int Sensor::getUserID()
     return userID;
 }
 
- map<> Sensor::getMeasure()
- {
+map<std::string, Measure*> Sensor::getMeasure()
+{
     return measureList;
 }
 
@@ -59,7 +58,7 @@ Sensor:: ~Sensor()
 
 }
 
-Sensor::Sensor(string sensorID, int latitude, int longitude, int userID)
+Sensor::Sensor(string sensorID, float latitude, float longitude, int userID)
 {
     #ifdef MAP
         cout << "Appel au constructeur de Sensor" << endl;
@@ -68,4 +67,5 @@ Sensor::Sensor(string sensorID, int latitude, int longitude, int userID)
     this->latitude = latitude;
     this->longitude = longitude;
     this->userID = userID;
+
 }

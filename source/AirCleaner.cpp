@@ -26,13 +26,13 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-string AirCleaner::getLatitude()
+int AirCleaner::getLatitude()
 {
     return latitude;
 }
 
     
-string AirCleaner::getLongitude()
+int AirCleaner::getLongitude()
 {
     return longitude;
 }
@@ -58,7 +58,7 @@ AirCleaner:: ~AirCleaner ( )
   	
 }
 
-AirCleaner::AirCleaner (string id, string lat, string longi, string start, string stop,string nomEntreprise)
+AirCleaner::AirCleaner (string id, float lat, float longi, string start, string stop,string nomEntreprise)
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de AirCleaner" << endl;

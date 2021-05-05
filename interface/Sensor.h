@@ -57,7 +57,7 @@ public:
     // Contrat :
     //
 
-   map<string, Measure> getMeasure();
+    map<std::string, Measure*> getMeasure();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
@@ -75,7 +75,7 @@ public:
     // Contrat :
     //
 
-    Sensor(string sensorID, int latitude, int longitude, int userID);
+    Sensor(string sensorID, float latitude, float longitude, int userID);
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
@@ -90,10 +90,10 @@ private:
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
     string sensorID;
-    int latitude;
-    int longitude;
+    float latitude;
+    float longitude;
     int userID;
-    map<string,Measure> measureList;
+    map<std::string,Measure*> measureList;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Sensor>

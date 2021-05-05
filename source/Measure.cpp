@@ -62,7 +62,7 @@ Measure:: ~Measure ( )
   	delete(myAttribute);
 }
 
-Measure::Measure (string id, string time, float value, string attributeId, string unit, string description, Sensor * sensor)
+Measure::Measure (string id, string time, float value, string attributeId, string unit, string description)
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de Measure" << endl;
@@ -70,8 +70,7 @@ Measure::Measure (string id, string time, float value, string attributeId, strin
     measureId=id;
     timeStamp=time;
     this->value=value;
-    myAttribute = new Attribute(attributeId, unit, description, this);
-    mySensor = sensor;
+    myAttribute = new Attribute(attributeId, unit, description);
 }
 //------------------------------------------------------------------ PRIVE
 
