@@ -58,7 +58,7 @@ void Datamanipulation::checkReliability(string userId)
 
 
 //-------------------------------------------- Constructeurs - destructeur
-Datamanipulation:: ~datamanipulation ( )
+Datamanipulation:: ~Datamanipulation ( )
 {
 	#ifdef MAP
 	cout << "Appel au destructeur de Catalogue" << endl;
@@ -66,12 +66,12 @@ Datamanipulation:: ~datamanipulation ( )
   	
 }
 
-Datamanipulation::datamanipulation ()
+Datamanipulation::Datamanipulation ()
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de Catalogue" << endl;
 	#endif
-    this->myListAirCleaner= new map<string, AirCleaner>;
+    
     
     string line;
     
@@ -101,13 +101,10 @@ Datamanipulation::datamanipulation ()
                        start=line;
                         break;
                     case 4:
-                       nomEntreprise=line;
-                       cout<< id <<" cc"<<lat<< " "<< longi<<" "<<start<<" "<< nomEntreprise<< endl;
-                       AirCleaner myairclean= new AirCleaner (id, lat, longi,start, stop,nomEntreprise);
-                       this->myListAirCleaner.insert(std::pair<string,AirCleaner>(id,myairclean));
-
-                       new 
-                       new 
+                        nomEntreprise=line;
+                        cout<< id <<" cc"<<lat<< " "<< longi<<" "<<start<<" "<< nomEntreprise<< endl;
+                        
+                        this->myListAirCleaner.insert(std::pair<string,AirCleaner*>(id,new AirCleaner (id, lat, longi,start, stop,nomEntreprise)));
                         break;
                     default:
                         cout<<"error"<<endl;
