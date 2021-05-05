@@ -33,14 +33,14 @@ class DataManipulation
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    void verifyAreaAirQuality(string longitude, string latitude, string radius);
+    void verifyAreaAirQuality(float longitude, float latitude, float radius);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
     // Contrat : 
     //
     
-  	void verifyPointAirQuality(string longitude, string latitude);
+  	void verifyPointAirQuality(float longitude, float latitude);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //

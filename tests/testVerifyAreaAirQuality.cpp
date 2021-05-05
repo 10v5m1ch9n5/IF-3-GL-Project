@@ -5,5 +5,5 @@
 int main()
 {
     DataManipulation dm;
-    dm.verifyAreaAirQuality("","","");
+    dm.verifyAreaAirQuality(12.0,34.0,50.0);
 }

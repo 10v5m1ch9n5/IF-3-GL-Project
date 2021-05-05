@@ -7,7 +7,7 @@ int main()
     DataManipulation dm;
 
     // Sensor 0
-    dm.verifyPointAirQuality("44","-1");
+    dm.verifyPointAirQuality(12.0,34.0);
     // Reponse attendue pour le 2019-12-31 (date la plus récente)
     // O3   -> 47.75 -> ATMO 2
     // NO2  -> 73.25 -> ATMO 3
