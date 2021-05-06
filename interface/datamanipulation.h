@@ -14,7 +14,7 @@
 #include <string>
 #include <map>
 
-//#include "Sensor.h"
+#include "Sensor.h"
 //#include "IndividualPerson.h"
 #include "AirCleaner.h"
 //------------------------------------------------------------- Constantes
@@ -47,7 +47,7 @@ public:
     // Contrat : 
     //
     
-    void verifySensorAirQuality(string censorId);
+    void findSimilarSensor(string sensorId);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
