@@ -14,7 +14,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "../interface/Measure.h"
-#include "../interface/sensor.h"
+#include "../interface/Sensor.h"
 
 using namespace std;
 
