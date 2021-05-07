@@ -73,7 +73,7 @@ DataManipulation::DataManipulation()
 
     string line;
 
-    ifstream cleanersFile("../dataset/test.txt");
+    ifstream cleanersFile("dataset/test.txt");
     string id, start, stop, nomEntreprise;
     float lat, longi;
     int i = 0;
