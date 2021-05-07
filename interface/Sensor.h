@@ -93,7 +93,7 @@ private:
     float latitude;
     float longitude;
     int userID;
-    map<std::string,Measure*> measureList;
+    map<std::string,Measure*> myListMeasures;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Sensor>

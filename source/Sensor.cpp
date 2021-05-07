@@ -45,7 +45,7 @@ int Sensor::getUserID()
 
 map<std::string, Measure*> Sensor::getMeasure()
 {
-    return measureList;
+    return myListMeasures;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
