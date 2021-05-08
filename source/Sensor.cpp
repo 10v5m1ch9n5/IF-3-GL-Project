@@ -193,8 +193,9 @@ int getAirQualityNO2(float value)
     }
 }
 
-void calcSingleAirQuality(string attributId, int valeur, int & total)
+int calcSingleAirQuality(string attributId, int valeur, int total)
 {
+    cout<<"total : "<<total<<endl;
     if(attributId.compare("O3"))
     {
         total+=getAirQualityO3(valeur);
@@ -210,7 +211,8 @@ void calcSingleAirQuality(string attributId, int valeur, int & total)
     else if(attributId.compare("PM10"))
     {
         total+=getAirQualityPM10(valeur);
-    }    
+    }   
+    return total; 
 }
 
 airQuality averageAirQuality(int valeur)
@@ -268,6 +270,11 @@ pair<airQuality,airQuality> Sensor::getAirQuality(string timeStart, string timeS
 {
     int qualityBefore=0;
     int qualityAfter=0;
+    cout<<myListMeasures.size()<<endl;
+    for (std::map<string,Measure*>::iterator it=this->myListMeasures.begin(); it!=this->myListMeasures.end(); ++it)
+    {
+        cout<<it->second->getTimeStamp()<<endl;
+    }
 
     typedef multimap<string,Measure*>::iterator MMAPIterator;
 
@@ -275,19 +282,26 @@ pair<airQuality,airQuality> Sensor::getAirQuality(string timeStart, string timeS
     
     result = myListMeasures.equal_range(timeStart);
 
+    
+
+    cout<<timeStart<<endl;
+
     for(MMAPIterator it = result.first; it != result.second; it++)
     {
-        calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityBefore);
+        cout<<"oui"<<endl;
+        qualityBefore=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityBefore);
     }
 
     result = myListMeasures.equal_range(timeStop);
 
     for(MMAPIterator it = result.first; it != result.second; it++)
     {
-        calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityAfter);
+        qualityAfter=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityAfter);
     }
 
     pair<airQuality,airQuality> difference;
+
+    cout<<qualityBefore<< " "<<qualityAfter<<endl;
 
     difference.first=averageAirQuality(qualityBefore/4);
 
@@ -320,7 +334,8 @@ multimap<std::string, Measure*> Sensor::getMeasure()
 void Sensor::addMeasure(string id, string time, float value, string attributeId, string unit, string description)
 {
     Measure * myMeasure = new Measure(id, time, value, attributeId, unit, description);
-    myListMeasures.insert(std::pair<string,Measure*>(time,myMeasure));
+    this->myListMeasures.insert(std::pair<string,Measure*>(time,myMeasure));
+    
 }
 
 //-------------------------------------------- Constructeurs - destructeur

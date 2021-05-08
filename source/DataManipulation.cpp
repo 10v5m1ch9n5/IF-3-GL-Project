@@ -303,7 +303,7 @@ DataManipulation::DataManipulation()
         }
         measuresFile.close();
         
-
+    
 
     }
     else cout << "Unable to open file" << endl;
