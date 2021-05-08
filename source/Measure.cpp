@@ -27,9 +27,9 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-string Measure::getMeasureId()
+string Measure::getSensorId()
 {
-    return measureId;
+    return sensorId;
 }
     
 string Measure::getTimeStamp()
@@ -67,7 +67,7 @@ Measure::Measure (string id, string time, float value, string attributeId, strin
 	#ifdef MAP
 	cout << "Appel au constructeur de Measure" << endl;
 	#endif
-    measureId=id;
+    sensorId=id;
     timeStamp=time;
     this->value=value;
     myAttribute = new Attribute(attributeId, unit, description);

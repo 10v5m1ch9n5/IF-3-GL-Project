@@ -29,14 +29,14 @@ class Sensor
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    int getLatitude();
+    float getLatitude();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    int getLongitude();
+    float getLongitude();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
@@ -64,6 +64,8 @@ public:
     // Contrat :
     //
 
+    void addMeasure(string id, string time, float value, string attributeId, string unit, string description);
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 
@@ -75,7 +77,7 @@ public:
     // Contrat :
     //
 
-    Sensor(string sensorID, float latitude, float longitude, int userID);
+    Sensor(string sensorId, float latitude, float longitude, int userID);
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
@@ -89,7 +91,7 @@ private:
 
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
-    string sensorID;
+    string sensorId;
     float latitude;
     float longitude;
     int userID;

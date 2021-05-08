@@ -73,22 +73,29 @@ DataManipulation::DataManipulation()
 
     string line;
 
-    ifstream cleanersFile("dataset/test.txt");
-    string id, start, stop, nomEntreprise;
+    // Air Cleaner
+
+    ifstream cleanersFile("dataset/cleaners.csv");
+    string  id, start, stop, nomEntreprise;
+    
     float lat, longi;
     int i = 0;
     if (cleanersFile.is_open())
     {
+        int a=true;
         while (getline(cleanersFile, line, ';'))
         {
-
-            if (line != "\n" && line != "")
-            {
-                //line.erase(remove(line.begin(), line.end(), '\n'), line.end());
-            }
             switch (i)
             {
             case 0:
+                if (a==false && line != "\n" && line != "")
+                {
+                    line.erase(0, 2);
+                }
+                if(a==true)
+                {
+                    a=false;
+                }
                 id = line;
                 break;
             case 1:
@@ -102,7 +109,6 @@ DataManipulation::DataManipulation()
                 break;
             case 4:
                 nomEntreprise = line;
-                cout << id << " cc" << lat << " " << longi << " " << start << " " << nomEntreprise << endl;
                 this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, start, stop, nomEntreprise)));
                 break;
             default:
@@ -113,8 +119,152 @@ DataManipulation::DataManipulation()
         }
         cleanersFile.close();
     }
-    else
-        cout << "Unable to open file" << endl;
+    else cout << "Unable to open file" << endl;
+
+    // Sensor
+    ifstream sensorsFile("dataset/sensors.csv");
+    i = 0;
+    
+    if (sensorsFile.is_open())
+    {
+        int a=true;
+        while (getline(sensorsFile, line, ';'))
+        { 
+            switch (i)
+            {
+            case 0:
+                
+                if (a==false && line != "\n" && line != "")
+                {
+                    line.erase(0, 2);
+                }
+                if(a==true)
+                {
+                    a=false;
+                }
+                id=line;
+                break;
+            case 1:
+                lat = stof(line);
+                break;
+            case 2:
+                longi = stof(line);
+                this->myListSensors.insert(std::pair<string, Sensor *>(id, new Sensor(id, lat, longi, 0)));
+                break;
+            default:
+                cout << "error" << endl;
+                break;
+            }
+            i = (i + 1) % 3;
+        }
+        sensorsFile.close();
+
+
+    }
+    else cout << "Unable to open file" << endl;
+
+    cout<<myListSensors["Sensor1"]<<endl;
+
+    for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
+    std::cout << it->first << " => " << it->second->getLatitude() << endl;
+    
+    cout<<myListSensors.size()<<endl;
+    
+    // attribute
+
+    string unit, attributeId, description;
+
+    std::map<string,pair<string,string>> listAttribute;
+
+    ifstream attributeFile("dataset/attributes.csv");
+    i = 0;
+    if (attributeFile.is_open())
+    {
+        while (getline(attributeFile, line, ';'))
+        {
+            int a = true;
+            switch (i)
+            {
+            case 0:
+                if (a==false && line != "\n" && line != "")
+                {
+                    line.erase(0, 2);
+                }
+                if(a==true)
+                {
+                    a=false;
+                }
+                attributeId = line;
+                break;
+            case 1:
+                unit = line;
+                break;
+            case 2:
+                description = line;
+                listAttribute[id]={unit, description};
+                break;
+            default:
+                cout << "error" << endl;
+                break;
+            }
+            i = (i + 1) % 3;
+        }
+        attributeFile.close();
+
+
+    }
+    else cout << "Unable to open file" << endl;
+
+    // measure
+
+    string timeStamp;
+    float value;
+
+    //ifstream measuresFile("dataset/measurements.csv");
+    ifstream measuresFile("datasetTest/measurementsTest.csv");
+    i = 0;
+    if (measuresFile.is_open())
+    {
+        while (getline(measuresFile, line, ';'))
+        {
+            int a = true;
+            switch (i)
+            {
+            case 0:
+                if (a==false && line != "\n" && line != "")
+                {
+                    line.erase(0, 2);
+                }
+                if(a==true)
+                {
+                    a=false;
+                }
+                timeStamp = line;
+                break;
+            case 1:
+                id = line;
+                break;
+            case 2:
+                attributeId = line;
+                break;
+            case 3:
+                value = stof(line);
+                  
+                this->myListSensors[id]->addMeasure(id,timeStamp,value,attributeId,listAttribute[attributeId].first,listAttribute[attributeId].second);
+                break;
+            default:
+                cout << "error" << endl;
+                break;
+            }
+            i = (i + 1) % 4;
+            
+        }
+        measuresFile.close();
+        
+
+
+    }
+    else cout << "Unable to open file" << endl;
 }
 //------------------------------------------------------------------ PRIVE
 

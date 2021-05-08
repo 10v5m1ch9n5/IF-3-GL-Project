@@ -10,6 +10,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "../interface/Sensor.h"
+#include <iostream>
 #include <map>
 
 using namespace std;
@@ -25,15 +26,15 @@ using namespace std;
 
 string Sensor::getSensorID()
 {
-    return sensorID;
+    return sensorId;
 }
 
-int Sensor::getLatitude()
+float Sensor::getLatitude()
 {
     return latitude;
 }
 
-int Sensor::getLongitude()
+float Sensor::getLongitude()
 {
     return longitude;
 }
@@ -46,6 +47,12 @@ int Sensor::getUserID()
 map<std::string, Measure*> Sensor::getMeasure()
 {
     return myListMeasures;
+}
+
+void Sensor::addMeasure(string id, string time, float value, string attributeId, string unit, string description)
+{
+    Measure * myMeasure = new Measure(id, time, value, attributeId, unit, description);
+    myListMeasures.insert(std::pair<string,Measure*>(time,myMeasure));
 }
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -63,7 +70,7 @@ Sensor::Sensor(string sensorID, float latitude, float longitude, int userID)
     #ifdef MAP
         cout << "Appel au constructeur de Sensor" << endl;
     #endif
-    this->sensorID = sensorID;
+    this->sensorId = sensorID;
     this->latitude = latitude;
     this->longitude = longitude;
     this->userID = userID;

@@ -32,7 +32,7 @@ class Measure
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    string getMeasureId();
+    string getSensorId();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
@@ -86,7 +86,7 @@ private:
   
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
-    string measureId;
+    string sensorId;
     string timeStamp;
     float value;
     Attribute * myAttribute;
