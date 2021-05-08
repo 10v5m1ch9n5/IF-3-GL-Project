@@ -17,6 +17,181 @@ using namespace std;
 
 //--------------------------------------------------------------- Fonction
 
+int getAirQualityPM10(float value)
+{
+    if(0<value<=6)
+    {
+        return 1;
+    }
+    else if(value<=13)
+    {
+        return 2;
+    }
+    else if(value<=20)
+    {
+        return 3;
+    }
+    else if(value<=27)
+    {
+        return 4;
+    }
+    else if(value<=34)
+    {
+        return 5;
+    }
+    else if(value<=41)
+    {
+        return 6;
+    }
+    else if(value<=49)
+    {
+        return 7;
+    }
+    else if(value<=64)
+    {
+        return 8;
+    }
+    else if(value<=79)
+    {
+        return 9;
+    }
+    else
+    {
+        return 10;
+    }
+}
+
+int getAirQualitySO2(float value)
+{
+    if(0<value<=39)
+    {
+        return 1;
+    }
+    else if(value<=79)
+    {
+        return 2;
+    }
+    else if(value<=119)
+    {
+        return 3;
+    }
+    else if(value<=159)
+    {
+        return 4;
+    }
+    else if(value<=199)
+    {
+        return 5;
+    }
+    else if(value<=249)
+    {
+        return 6;
+    }
+    else if(value<=299)
+    {
+        return 7;
+    }
+    else if(value<=399)
+    {
+        return 8;
+    }
+    else if(value<=499)
+    {
+        return 9;
+    }
+    else
+    {
+        return 10;
+    }
+}
+
+int getAirQualityO3(float value)
+{
+    if(0<value<=29)
+    {
+        return 1;
+    }
+    else if(value<=54)
+    {
+        return 2;
+    }
+    else if(value<=79)
+    {
+        return 3;
+    }
+    else if(value<=104)
+    {
+        return 4;
+    }
+    else if(value<=129)
+    {
+        return 5;
+    }
+    else if(value<=149)
+    {
+        return 6;
+    }
+    else if(value<=179)
+    {
+        return 7;
+    }
+    else if(value<=209)
+    {
+        return 8;
+    }
+    else if(value<=239)
+    {
+        return 9;
+    }
+    else
+    {
+        return 10;
+    }
+}
+
+int getAirQualityNO2(float value)
+{
+    if(0<value<=29)
+    {
+        return 1;
+    }
+    else if(value<=54)
+    {
+        return 2;
+    }
+    else if(value<=84)
+    {
+        return 3;
+    }
+    else if(value<=109)
+    {
+        return 4;
+    }
+    else if(value<=134)
+    {
+        return 5;
+    }
+    else if(value<=164)
+    {
+        return 6;
+    }
+    else if(value<=199)
+    {
+        return 7;
+    }
+    else if(value<=274)
+    {
+        return 8;
+    }
+    else if(value<=399)
+    {
+        return 9;
+    }
+    else
+    {
+        return 10;
+    }
+}
 
 //------------------------------------------------------------- Constantes
 
@@ -27,6 +202,11 @@ using namespace std;
 string Sensor::getSensorID()
 {
     return sensorId;
+}
+
+airQuality Sensor::getAirQuality(string timeStart, string timeStop)
+{
+
 }
 
 float Sensor::getLatitude()
@@ -44,7 +224,8 @@ int Sensor::getUserID()
     return userID;
 }
 
-map<std::string, Measure*> Sensor::getMeasure()
+
+multimap<std::string, Measure*> Sensor::getMeasure()
 {
     return myListMeasures;
 }

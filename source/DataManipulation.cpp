@@ -48,7 +48,23 @@ void DataManipulation::listAllSensor() const
 void DataManipulation::checkImpactAirCleaner(string airCleanerId)
 
 {
-    int longitude, latitude;
+    float longitude, latitude;
+
+    AirCleaner * myAirCleaner;
+    
+    try
+    {
+        myAirCleaner = myListAirCleaner.at(airCleanerId);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    longitude = myAirCleaner->getLongitude();
+    latitude = myAirCleaner->getLatitude();
+
+    
 
 } // -----
 
@@ -134,6 +150,8 @@ DataManipulation::DataManipulation()
             {
             case 0:
                 
+                // condition qui permet de supprimer les caractères indésirables
+
                 if (a==false && line != "\n" && line != "")
                 {
                     line.erase(0, 2);
@@ -163,13 +181,16 @@ DataManipulation::DataManipulation()
     }
     else cout << "Unable to open file" << endl;
 
+    /* affichage de la list sensor
+
     cout<<myListSensors["Sensor1"]<<endl;
 
     for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
     std::cout << it->first << " => " << it->second->getLatitude() << endl;
     
     cout<<myListSensors.size()<<endl;
-    
+    */
+
     // attribute
 
     string unit, attributeId, description;
@@ -265,6 +286,7 @@ DataManipulation::DataManipulation()
 
     }
     else cout << "Unable to open file" << endl;
+
 }
 //------------------------------------------------------------------ PRIVE
 

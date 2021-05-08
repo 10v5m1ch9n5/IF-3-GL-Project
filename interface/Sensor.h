@@ -17,6 +17,8 @@ using namespace std;
 
 //------------------------------------------------------------------ Types
 
+enum airQuality {VeryGood, Good, Average, Poor, Bad,VeryBad};
+
 //------------------------------------------------------------------------
 // Rôle de la classe <Sensor>
 //
@@ -57,12 +59,14 @@ public:
     // Contrat :
     //
 
-    map<std::string, Measure*> getMeasure();
+    multimap<std::string, Measure*> getMeasure();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
     // Contrat :
     //
+
+    airQuality getAirQuality(string timeStart, string timeStop);
 
     void addMeasure(string id, string time, float value, string attributeId, string unit, string description);
 
@@ -95,7 +99,7 @@ private:
     float latitude;
     float longitude;
     int userID;
-    map<std::string,Measure*> myListMeasures;
+    multimap<std::string,Measure*> myListMeasures;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Sensor>
