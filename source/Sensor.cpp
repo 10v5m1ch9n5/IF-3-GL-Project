@@ -19,7 +19,7 @@ using namespace std;
 
 int getAirQualityPM10(float value)
 {
-    if(0<value<=6)
+    if(0<value && value<=6)
     {
         return 1;
     }
@@ -63,7 +63,7 @@ int getAirQualityPM10(float value)
 
 int getAirQualitySO2(float value)
 {
-    if(0<value<=39)
+    if(0<value && value<=39)
     {
         return 1;
     }
@@ -107,7 +107,7 @@ int getAirQualitySO2(float value)
 
 int getAirQualityO3(float value)
 {
-    if(0<value<=29)
+    if(0<value && value<=29)
     {
         return 1;
     }
@@ -151,7 +151,7 @@ int getAirQualityO3(float value)
 
 int getAirQualityNO2(float value)
 {
-    if(0<value<=29)
+    if(0<value && value<=29)
     {
         return 1;
     }
@@ -193,6 +193,66 @@ int getAirQualityNO2(float value)
     }
 }
 
+void calcSingleAirQuality(string attributId, int valeur, int & total)
+{
+    if(attributId.compare("O3"))
+    {
+        total+=getAirQualityO3(valeur);
+    }
+    else if(attributId.compare("SO2"))
+    {
+        total+=getAirQualitySO2(valeur);
+    }
+    else if(attributId.compare("NO2"))
+    {
+        total+=getAirQualityNO2(valeur);
+    }
+    else if(attributId.compare("PM10"))
+    {
+        total+=getAirQualityPM10(valeur);
+    }    
+}
+
+airQuality averageAirQuality(int valeur)
+{
+    switch (valeur)
+    {
+    case 1:
+        return VeryGood;
+        break;
+    case 2:
+        return VeryGood;
+        break;
+    case 3:
+        return Good;
+        break;
+    case 4:
+        return Good;
+        break;
+    case 5:
+        return Average;
+        break;
+    case 6:
+        return Poor;
+        break;
+    case 7:
+        return Poor;
+        break;
+    case 8:
+        return Bad;
+        break;
+    case 9:
+        return Bad;
+        break;
+    case 10:
+        return VeryBad;
+        break;
+    default:
+        return Average; 
+        break;
+    }
+}
+
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -204,9 +264,36 @@ string Sensor::getSensorID()
     return sensorId;
 }
 
-airQuality Sensor::getAirQuality(string timeStart, string timeStop)
+pair<airQuality,airQuality> Sensor::getAirQuality(string timeStart, string timeStop)
 {
+    int qualityBefore=0;
+    int qualityAfter=0;
 
+    typedef multimap<string,Measure*>::iterator MMAPIterator;
+
+    pair<MMAPIterator, MMAPIterator> result;
+    
+    result = myListMeasures.equal_range(timeStart);
+
+    for(MMAPIterator it = result.first; it != result.second; it++)
+    {
+        calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityBefore);
+    }
+
+    result = myListMeasures.equal_range(timeStop);
+
+    for(MMAPIterator it = result.first; it != result.second; it++)
+    {
+        calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityAfter);
+    }
+
+    pair<airQuality,airQuality> difference;
+
+    difference.first=averageAirQuality(qualityBefore/4);
+
+    difference.second=averageAirQuality(qualityAfter/4);
+
+    return difference;
 }
 
 float Sensor::getLatitude()

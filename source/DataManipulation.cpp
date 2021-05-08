@@ -13,6 +13,7 @@
 //-------------------------------------------------------- Include système
 #include <fstream>
 #include <iostream>
+#include <math.h>
 
 //------------------------------------------------------ Include personnel
 #include "../interface/DataManipulation.h"
@@ -48,6 +49,8 @@ void DataManipulation::listAllSensor() const
 void DataManipulation::checkImpactAirCleaner(string airCleanerId)
 
 {
+    // le rayon est choisi arbitrairement
+    double radius = 0.5 ;
     float longitude, latitude;
 
     AirCleaner * myAirCleaner;
@@ -64,8 +67,26 @@ void DataManipulation::checkImpactAirCleaner(string airCleanerId)
     longitude = myAirCleaner->getLongitude();
     latitude = myAirCleaner->getLatitude();
 
-    
+    map<string, Sensor*> sensorInRadius;
 
+    for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
+    {
+        //cout<<pow(pow(it->second->getLatitude()-latitude,2)+pow(it->second->getLongitude()-longitude,2),0.5)<<endl;
+        if( pow(pow(it->second->getLatitude()-latitude,2)+pow(it->second->getLongitude()-longitude,2),0.5) <= radius )
+        {
+            sensorInRadius[it->first]=it->second;
+        }
+    }
+    int before=0;
+    int after=0;
+    pair<airQuality,airQuality> res;
+    for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
+    {
+        res=it->second->getAirQuality(myAirCleaner->getTimeStampStart(), myAirCleaner->getTimeStampStop());
+        before+=res.first;
+        after+=res.second;
+    }
+    cout<<"before : "<<before<<" | after : "<<after<<endl;
 } // -----
 
 void DataManipulation::checkReliability(string userId)
