@@ -193,67 +193,29 @@ int getAirQualityNO2(float value)
     }
 }
 
-int calcSingleAirQuality(string attributId, int valeur, int total)
+int calcSingleAirQuality(string attributId, float valeur, int total)
 {
-    cout<<"total : "<<total<<endl;
-    if(attributId.compare("O3"))
+    //cout<<attributId<<" "<<valeur<<" total : "<<total<<endl;
+    if(!attributId.compare("O3"))
     {
         total+=getAirQualityO3(valeur);
     }
-    else if(attributId.compare("SO2"))
+    else if(!attributId.compare("SO2"))
     {
         total+=getAirQualitySO2(valeur);
     }
-    else if(attributId.compare("NO2"))
+    else if(!attributId.compare("NO2"))
     {
         total+=getAirQualityNO2(valeur);
     }
-    else if(attributId.compare("PM10"))
+    else if(!attributId.compare("PM10"))
     {
         total+=getAirQualityPM10(valeur);
     }   
+    //cout<<attributId<<" "<<valeur<<" total : "<<total<<endl;
     return total; 
 }
 
-airQuality averageAirQuality(int valeur)
-{
-    switch (valeur)
-    {
-    case 1:
-        return VeryGood;
-        break;
-    case 2:
-        return VeryGood;
-        break;
-    case 3:
-        return Good;
-        break;
-    case 4:
-        return Good;
-        break;
-    case 5:
-        return Average;
-        break;
-    case 6:
-        return Poor;
-        break;
-    case 7:
-        return Poor;
-        break;
-    case 8:
-        return Bad;
-        break;
-    case 9:
-        return Bad;
-        break;
-    case 10:
-        return VeryBad;
-        break;
-    default:
-        return Average; 
-        break;
-    }
-}
 
 //------------------------------------------------------------- Constantes
 
@@ -266,15 +228,10 @@ string Sensor::getSensorID()
     return sensorId;
 }
 
-pair<airQuality,airQuality> Sensor::getAirQuality(string timeStart, string timeStop)
+pair<float,float> Sensor::getAirQuality(string timeStart, string timeStop)
 {
-    int qualityBefore=0;
-    int qualityAfter=0;
-    cout<<myListMeasures.size()<<endl;
-    for (std::map<string,Measure*>::iterator it=this->myListMeasures.begin(); it!=this->myListMeasures.end(); ++it)
-    {
-        cout<<it->second->getTimeStamp()<<endl;
-    }
+    float qualityBefore=0;
+    float qualityAfter=0;
 
     typedef multimap<string,Measure*>::iterator MMAPIterator;
 
@@ -282,16 +239,17 @@ pair<airQuality,airQuality> Sensor::getAirQuality(string timeStart, string timeS
     
     result = myListMeasures.equal_range(timeStart);
 
-    
-
-    cout<<timeStart<<endl;
+    //cout<<timeStart<<" "<<timeStop<<endl;
 
     for(MMAPIterator it = result.first; it != result.second; it++)
     {
-        cout<<"oui"<<endl;
         qualityBefore=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityBefore);
     }
-
+    timeStop[6]=timeStart[6];
+    timeStop[8]=50;
+    timeStop[9]=56;
+    timeStop[11]=timeStart[11];
+    timeStop[12]=timeStart[12];
     result = myListMeasures.equal_range(timeStop);
 
     for(MMAPIterator it = result.first; it != result.second; it++)
@@ -299,13 +257,15 @@ pair<airQuality,airQuality> Sensor::getAirQuality(string timeStart, string timeS
         qualityAfter=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityAfter);
     }
 
-    pair<airQuality,airQuality> difference;
+    pair<float,float> difference;
 
-    cout<<qualityBefore<< " "<<qualityAfter<<endl;
+    //cout<<qualityBefore<<" | "<<qualityAfter<<endl;
 
-    difference.first=averageAirQuality(qualityBefore/4);
+    difference.first=qualityBefore/4;
 
-    difference.second=averageAirQuality(qualityAfter/4);
+    difference.second=qualityAfter/4;
+
+    //cout<<difference.first<<" "<<difference.second<<endl;
 
     return difference;
 }
@@ -346,6 +306,8 @@ Sensor:: ~Sensor()
         cout << "Appel au destructeur de Sensor" << endl;
     #endif
 
+    for (std::map<string,Measure*>::iterator it=this->myListMeasures.begin(); it!=this->myListMeasures.end(); ++it)
+        delete(it->second);
 }
 
 Sensor::Sensor(string sensorID, float latitude, float longitude, int userID)

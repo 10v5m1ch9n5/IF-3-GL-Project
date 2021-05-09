@@ -49,6 +49,11 @@ string AirCleaner::getTimeStampStop()
     return timeStampStop;
 }
     
+string AirCleaner::getId()
+{
+    return cleanerId;
+}
+
 //-------------------------------------------- Constructeurs - destructeur
 AirCleaner:: ~AirCleaner ( )
 {

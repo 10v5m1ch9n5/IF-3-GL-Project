@@ -56,6 +56,8 @@ public:
     //
     // Contrat : 
     //
+
+    string getId();
 //------------------------------------------------- Surcharge d'opérateurs
 
 
@@ -67,7 +69,7 @@ public:
     // Contrat :
     //
 
-    AirCleaner (string id, float lat, float longi, string start, string stop, string nomEntreprise);
+    AirCleaner (string id, float lat, float longi, string start, string stop, string nomEntreprise="");
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 

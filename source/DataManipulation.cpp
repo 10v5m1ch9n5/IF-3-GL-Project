@@ -22,6 +22,48 @@ using namespace std;
 
 //--------------------------------------------------------------- Fonction
 
+airQuality averageAirQuality(int valeur)
+{
+    //cout<<"valeur "<<valeur<<endl;
+    switch (valeur)
+    {
+    case 1:
+        return VeryGood;
+        break;
+    case 2:
+        return VeryGood;
+        break;
+    case 3:
+        return Good;
+        break;
+    case 4:
+        return Good;
+        break;
+    case 5:
+        return Average;
+        break;
+    case 6:
+        return Poor;
+        break;
+    case 7:
+        return Poor;
+        break;
+    case 8:
+        return Bad;
+        break;
+    case 9:
+        return Bad;
+        break;
+    case 10:
+        return VeryBad;
+        break;
+    default:
+        return Average; 
+        break;
+    }
+}
+
+
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -46,11 +88,9 @@ void DataManipulation::listAllSensor() const
 {
 } // -----
 
-void DataManipulation::checkImpactAirCleaner(string airCleanerId)
+void DataManipulation::checkImpactAirCleaner(string airCleanerId, float radius)
 
 {
-    // le rayon est choisi arbitrairement
-    double radius = 0.5 ;
     float longitude, latitude;
 
     AirCleaner * myAirCleaner;
@@ -67,6 +107,8 @@ void DataManipulation::checkImpactAirCleaner(string airCleanerId)
     longitude = myAirCleaner->getLongitude();
     latitude = myAirCleaner->getLatitude();
 
+    //cout<<longitude<<" | "<<latitude<<endl;
+
     map<string, Sensor*> sensorInRadius;
 
     for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
@@ -77,16 +119,30 @@ void DataManipulation::checkImpactAirCleaner(string airCleanerId)
             sensorInRadius[it->first]=it->second;
         }
     }
-    int before=0;
-    int after=0;
-    pair<airQuality,airQuality> res;
+
+    cout<<"sensor in radius "<<sensorInRadius.size()<<endl;
+
+    float before=0;
+    float after=0;
+    pair<float,float> res;
     for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
     {
+        cout<<"sensor id : "<<it->second->getSensorID()<<" | size list "<<it->second->getMeasure().size()<<endl;
         res=it->second->getAirQuality(myAirCleaner->getTimeStampStart(), myAirCleaner->getTimeStampStop());
         before+=res.first;
         after+=res.second;
     }
+
     cout<<"before : "<<before<<" | after : "<<after<<endl;
+
+    if(sensorInRadius.size()!=0)
+    {
+        airQuality qualityBefore = averageAirQuality(before/sensorInRadius.size());
+
+        airQuality qualityAfter = averageAirQuality(after/sensorInRadius.size());
+        cout<<"Qualite --plus c'est proche de 0 plus c'est bon--"<<endl<<"before : "<<qualityBefore<<" | after : "<<qualityAfter<<endl;
+    }
+
 } // -----
 
 void DataManipulation::checkReliability(string userId)
@@ -100,6 +156,14 @@ DataManipulation::~DataManipulation()
 #ifdef MAP
     cout << "Appel au destructeur de Catalogue" << endl;
 #endif
+
+    //delete sensor
+    for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
+        delete(it->second);
+
+    //delete airCleaner
+    for (std::map<string,AirCleaner*>::iterator it=this->myListAirCleaner.begin(); it!=this->myListAirCleaner.end(); ++it)
+        delete(it->second);
 }
 
 DataManipulation::DataManipulation()
@@ -145,8 +209,8 @@ DataManipulation::DataManipulation()
                 start = line;
                 break;
             case 4:
-                nomEntreprise = line;
-                this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, start, stop, nomEntreprise)));
+                stop = line;
+                this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, start, stop)));
                 break;
             default:
                 cout << "error" << endl;
@@ -222,9 +286,10 @@ DataManipulation::DataManipulation()
     i = 0;
     if (attributeFile.is_open())
     {
+        int a = true;
         while (getline(attributeFile, line, ';'))
         {
-            int a = true;
+            
             switch (i)
             {
             case 0:
@@ -262,14 +327,15 @@ DataManipulation::DataManipulation()
     string timeStamp;
     float value;
 
-    //ifstream measuresFile("dataset/measurements.csv");
-    ifstream measuresFile("datasetTest/measurementsTest.csv");
+    ifstream measuresFile("dataset/measurements.csv");
+    //ifstream measuresFile("datasetTest/measurementsTest.csv");
     i = 0;
     if (measuresFile.is_open())
     {
+        int a = true;
         while (getline(measuresFile, line, ';'))
         {
-            int a = true;
+            
             switch (i)
             {
             case 0:
@@ -303,7 +369,7 @@ DataManipulation::DataManipulation()
         }
         measuresFile.close();
         
-    
+
 
     }
     else cout << "Unable to open file" << endl;

@@ -61,7 +61,7 @@ public:
     // Contrat : 
     //
 
-    void checkImpactAirCleaner(string airCleanerId);
+    void checkImpactAirCleaner(string airCleanerId, float radius);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
