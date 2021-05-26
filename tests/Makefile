@@ -7,7 +7,7 @@ vpath %.cpp ../../source
 vpath %.o ../
 
 testVerifyPointAirQuality.out: testVerifyPointAirQuality.o $(OFILESPROJ)
-	$(CXX) -o $@ $^
+	$(CXX) -o ../$@ $^
 
 testVerifyPointAirQuality.o: testVerifyPointAirQuality.cpp
 
