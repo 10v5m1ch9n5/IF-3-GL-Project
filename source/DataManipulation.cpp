@@ -15,6 +15,8 @@
 #include <iostream>
 #include <math.h>
 #include <algorithm>
+#include <time.h>
+
 //------------------------------------------------------ Include personnel
 #include "../interface/DataManipulation.h"
 
@@ -72,6 +74,8 @@ airQuality averageAirQuality(int valeur)
 
 void DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius)
 {
+
+
 } // -----
 
 void DataManipulation::verifyPointAirQuality(float longitude, float latitude)
@@ -181,6 +185,10 @@ DataManipulation::DataManipulation()
     
     float lat, longi;
     int i = 0;
+    struct tm myDate1;
+    struct tm myDate2;
+    time_t timestamp1;
+    time_t timestamp2;
     if (cleanersFile.is_open())
     {
         while (getline(cleanersFile, line, ';'))
@@ -204,12 +212,18 @@ DataManipulation::DataManipulation()
                 break;
             case 3:
                 start = line;
+                myDate1.tm_sec = 15;     // Time == 12:30:15
+                timestamp1= mktime( & myDate1 );
+                printf( "Timestamp == %ld\n", timestamp1 );
                 //cout<<"start "<<start<<endl;
                 break;
             case 4:
                 stop = line;
+                myDate2.tm_sec = 15;     // Time == 12:30:15
+                timestamp2= mktime( & myDate2 );
+                printf( "Timestamp == %ld\n", timestamp2 );
                 //cout<<"stop "<<stop<<endl;
-                this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, start, stop)));
+                this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, timestamp1, timestamp2)));
                 break;
             default:
                 cout << "error" << endl;
@@ -221,14 +235,13 @@ DataManipulation::DataManipulation()
     }
     else cout << "Unable to open file" << endl;
    
-    cout << "Données cleaners chargée" << endl;
+    cout << "Données cleaners chargées" << endl;
     // Sensor
     ifstream sensorsFile("dataset/sensors.csv");
     i = 0;
     
     if (sensorsFile.is_open())
     {
-        int premiereLigne=true;
         while (getline(sensorsFile, line, ';'))
         { 
             line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
@@ -236,15 +249,15 @@ DataManipulation::DataManipulation()
             {
             case 0:
                 id=line;
-                cout<<id<<endl;
+                //cout<<id<<endl;
                 break;
             case 1:
                 lat = stof(line);
-                cout<<lat<<endl;
+                //cout<<lat<<endl;
                 break;
             case 2:
                 longi = stof(line);
-                cout<<longi<<endl;
+                //cout<<longi<<endl;
                 this->myListSensors.insert(std::pair<string, Sensor *>(id, new Sensor(id, lat, longi, 0)));
                 break;
             default:
@@ -257,16 +270,8 @@ DataManipulation::DataManipulation()
     }
     else cout << "Unable to open file" << endl;
     
-    cout << "Données cleaners chargée" << endl;
-    /* affichage de la list sensor
+    cout << "Données sensors chargées" << endl;
 
-    cout<<myListSensors["Sensor1"]<<endl;
-
-    for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
-    std::cout << it->first << " => " << it->second->getLatitude() << endl;
-    
-    cout<<myListSensors.size()<<endl;
-    */
 
     // attribute
 
@@ -278,21 +283,12 @@ DataManipulation::DataManipulation()
     i = 0;
     if (attributeFile.is_open())
     {
-        int premiereLigne = true;
         while (getline(attributeFile, line, ';'))
         {
-            
+            line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
             switch (i)
             {
             case 0:
-                if (premiereLigne==false && line != "\n" && line != "")
-                {
-                    line.erase(0, 2);
-                }
-                if(premiereLigne==true)
-                {
-                    premiereLigne=false;
-                }
                 attributeId = line;
                 break;
             case 1:
@@ -300,6 +296,7 @@ DataManipulation::DataManipulation()
                 break;
             case 2:
                 description = line;
+                //cout << attributeId<< " "<<unit<<" " <<description << endl;
                 listAttribute[attributeId]=pair<string,string>(unit, description);
                 break;
             default:
@@ -313,7 +310,8 @@ DataManipulation::DataManipulation()
 
     }
     else cout << "Unable to open file" << endl;
-
+    
+    cout << "Données Attribute chargées" << endl;
     // measure
 
     string timeStamp;
@@ -322,48 +320,46 @@ DataManipulation::DataManipulation()
     ifstream measuresFile("dataset/measurements.csv");
     //ifstream measuresFile("datasetTest/measurementsTest.csv");
     i = 0;
+    struct tm myDate;
+    time_t timestamp;
     if (measuresFile.is_open())
     {
-        int premiereLigne = true;
         while (getline(measuresFile, line, ';'))
         {
-            
+              line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
             switch (i)
             {
-            case 0:
-                if (premiereLigne==false && line != "\n" && line != "")
-                {
-                    line.erase(0, 2);
-                }
-                if(premiereLigne==true)
-                {
-                    premiereLigne=false;
-                }
-                timeStamp = line;
-                break;
-            case 1:
-                id = line;
-                break;
-            case 2:
-                attributeId = line;
-                break;
-            case 3:
-                value = stof(line);
-                this->myListSensors[id]->addMeasure(id,timeStamp,value,attributeId,listAttribute[attributeId].first,listAttribute[attributeId].second);
-                break;
-            default:
-                cout << "error" << endl;
-                break;
+                case 0:
+                    timeStamp = line;
+                    myDate.tm_sec = 15;     // Time == 12:30:15
+                    timestamp= mktime( & myDate );
+                    printf( "Timestamp == %ld\n", timestamp );
+                    cout<<timeStamp<<endl;
+                    break;
+                case 1:
+                    id = line;
+                    //cout<<id<<endl;
+                    break;
+                case 2:
+                    attributeId = line;
+                    //cout<<attributeId<<endl;
+                    break;
+                case 3:
+                    value = stof(line);
+                    //cout<<value<<endl;
+                    this->myListSensors[id]->addMeasure(id,timestamp,value,attributeId,listAttribute[attributeId].first,listAttribute[attributeId].second);
+                    break;
+                default:
+                    cout << "error" << endl;
+                    break;
             }
             i = (i + 1) % 4;
             
         }
         measuresFile.close();
-        
-
-
     }
     else cout << "Unable to open file" << endl;
+    cout << "Données Mesures chargées" << endl;
 
 }
 //------------------------------------------------------------------ PRIVE

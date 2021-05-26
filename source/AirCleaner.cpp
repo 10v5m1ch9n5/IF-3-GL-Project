@@ -38,13 +38,13 @@ int AirCleaner::getLongitude()
 }
 
 
-string AirCleaner::getTimeStampStart()
+time_t AirCleaner::getTimeStampStart()
 {
     return timeStampStart;
 }
 
 
-string AirCleaner::getTimeStampStop()
+time_t AirCleaner::getTimeStampStop()
 {
     return timeStampStop;
 }
@@ -63,7 +63,7 @@ AirCleaner:: ~AirCleaner ( )
   	
 }
 
-AirCleaner::AirCleaner (string id, float lat, float longi, string start, string stop,string nomEntreprise)
+AirCleaner::AirCleaner (string id, float lat, float longi, time_t start, time_t stop,string nomEntreprise)
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de AirCleaner" << endl;

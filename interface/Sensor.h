@@ -11,6 +11,7 @@
 #include <string>
 #include <map>
 #include "Measure.h"
+#include <time.h>
 
 using namespace std;
 //------------------------------------------------------------- Constantes
@@ -59,16 +60,16 @@ public:
     // Contrat :
     //
 
-    multimap<std::string, Measure*> getMeasure();
+    multimap<time_t, Measure*> getMeasure();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    pair<float,float> getAirQuality(string timeStart, string timeStop);
+    pair<float,float> getAirQuality(time_t timeStart, time_t timeStop);
 
-    void addMeasure(string id, string time, float value, string attributeId, string unit, string description);
+    void addMeasure(string id, time_t time, float value, string attributeId, string unit, string description);
 
 //------------------------------------------------- Surcharge d'opérateurs
 
@@ -99,7 +100,7 @@ private:
     float latitude;
     float longitude;
     int userID;
-    multimap<std::string,Measure*> myListMeasures;
+    multimap<time_t,Measure*> myListMeasures;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Sensor>
