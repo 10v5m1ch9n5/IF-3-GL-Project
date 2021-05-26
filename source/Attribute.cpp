@@ -14,7 +14,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "../interface/Attribute.h"
-
+#include <iostream>
 
 using namespace std;
 
@@ -58,6 +58,7 @@ Attribute::Attribute (string id, string unit, string description)
 	#ifdef MAP
 	cout << "Appel au constructeur de Attribute" << endl;
 	#endif
+    //cout<<id<<" "<<unit<<" "<<description<<endl;
     attributeId=id;
     this->unit=unit;
     this->description=description;

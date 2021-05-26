@@ -16,6 +16,7 @@
 #include "../interface/Measure.h"
 #include "../interface/Sensor.h"
 
+#include <iostream>
 using namespace std;
 
 //--------------------------------------------------------------- Fonction 
@@ -67,6 +68,7 @@ Measure::Measure (string id, string time, float value, string attributeId, strin
 	#ifdef MAP
 	cout << "Appel au constructeur de Measure" << endl;
 	#endif
+    //cout<<id<<" "<<time<<" "<<value<<" "<<attributeId<<" "<<unit<<" "<<description<<endl;
     sensorId=id;
     timeStamp=time;
     this->value=value;

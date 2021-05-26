@@ -183,19 +183,19 @@ DataManipulation::DataManipulation()
     int i = 0;
     if (cleanersFile.is_open())
     {
-        int a=true;
+        int premiereLigne=true;
         while (getline(cleanersFile, line, ';'))
         {
             switch (i)
             {
             case 0:
-                if (a==false && line != "\n" && line != "")
+                if (premiereLigne==false && line != "\n" && line != "")
                 {
                     line.erase(0, 2);
                 }
-                if(a==true)
+                if(premiereLigne==true)
                 {
-                    a=false;
+                    premiereLigne=false;
                 }
                 id = line;
                 break;
@@ -228,7 +228,7 @@ DataManipulation::DataManipulation()
     
     if (sensorsFile.is_open())
     {
-        int a=true;
+        int premiereLigne=true;
         while (getline(sensorsFile, line, ';'))
         { 
             switch (i)
@@ -237,13 +237,13 @@ DataManipulation::DataManipulation()
                 
                 // condition qui permet de supprimer les caractères indésirables
 
-                if (a==false && line != "\n" && line != "")
+                if (premiereLigne==false && line != "\n" && line != "")
                 {
                     line.erase(0, 2);
                 }
-                if(a==true)
+                if(premiereLigne==true)
                 {
-                    a=false;
+                    premiereLigne=false;
                 }
                 id=line;
                 break;
@@ -286,20 +286,20 @@ DataManipulation::DataManipulation()
     i = 0;
     if (attributeFile.is_open())
     {
-        int a = true;
+        int premiereLigne = true;
         while (getline(attributeFile, line, ';'))
         {
             
             switch (i)
             {
             case 0:
-                if (a==false && line != "\n" && line != "")
+                if (premiereLigne==false && line != "\n" && line != "")
                 {
                     line.erase(0, 2);
                 }
-                if(a==true)
+                if(premiereLigne==true)
                 {
-                    a=false;
+                    premiereLigne=false;
                 }
                 attributeId = line;
                 break;
@@ -308,7 +308,7 @@ DataManipulation::DataManipulation()
                 break;
             case 2:
                 description = line;
-                listAttribute[id]={unit, description};
+                listAttribute[attributeId]=pair<string,string>(unit, description);
                 break;
             default:
                 cout << "error" << endl;
@@ -332,20 +332,20 @@ DataManipulation::DataManipulation()
     i = 0;
     if (measuresFile.is_open())
     {
-        int a = true;
+        int premiereLigne = true;
         while (getline(measuresFile, line, ';'))
         {
             
             switch (i)
             {
             case 0:
-                if (a==false && line != "\n" && line != "")
+                if (premiereLigne==false && line != "\n" && line != "")
                 {
                     line.erase(0, 2);
                 }
-                if(a==true)
+                if(premiereLigne==true)
                 {
-                    a=false;
+                    premiereLigne=false;
                 }
                 timeStamp = line;
                 break;
@@ -357,7 +357,6 @@ DataManipulation::DataManipulation()
                 break;
             case 3:
                 value = stof(line);
-                  
                 this->myListSensors[id]->addMeasure(id,timeStamp,value,attributeId,listAttribute[attributeId].first,listAttribute[attributeId].second);
                 break;
             default:
