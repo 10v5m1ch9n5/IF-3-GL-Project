@@ -25,6 +25,7 @@ $(OFILES) : $(HFILES)
 all : $(TARGET).out
 
 clean:
+	@echo "Nettoyage ..."
 	@rm *.out *.o
 
 .PHONY: clean all
