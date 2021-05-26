@@ -233,11 +233,11 @@ pair<float,float> Sensor::getAirQuality(time_t timeStart, time_t timeStop)
     float qualityBefore=0;
     float qualityAfter=0;
 
-    typedef multimap<string,Measure*>::iterator MMAPIterator;
+    typedef multimap<time_t,Measure*>::iterator MMAPIterator;
 
     pair<MMAPIterator, MMAPIterator> result;
     
-     result = myListMeasures.equal_range(timeStart);
+    result = myListMeasures.equal_range(timeStart);
 
     //cout<<timeStart<<" "<<timeStop<<endl;
 
