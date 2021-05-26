@@ -2,9 +2,9 @@ TARGET  := AirWatcher
 INCLUDE := interface
 SOURCE  := source
 
-CC := g++
+CXX := g++
 CXXFLAGS := -ansi -pedantic -Wall -std=c++11
-LD := $(CC)
+LD := g++
 LDFLAGS := -g
 
 CPPFILES := $(notdir $(wildcard $(SOURCE)/*.cpp))
@@ -18,7 +18,6 @@ $(TARGET).out : $(OFILES)
 	$(LD) $(LDFLAGS) -o $@ $^
 
 $(OFILES) : %.o : %.cpp
-	$(CC) $(CXXFLAGS) -c $< -o $@
 
 $(OFILES) : $(HFILES)
 
@@ -26,6 +25,6 @@ all : $(TARGET).out
 
 clean:
 	@echo "Nettoyage ..."
-	@rm *.out *.o
+	@rm -f *.out *.o
 
 .PHONY: clean all
