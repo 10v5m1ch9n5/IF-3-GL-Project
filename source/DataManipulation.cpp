@@ -236,15 +236,15 @@ DataManipulation::DataManipulation()
             {
             case 0:
                 id=line;
-                cout<<id<<endl;
+                //cout<<id<<endl;
                 break;
             case 1:
                 lat = stof(line);
-                cout<<lat<<endl;
+                //cout<<lat<<endl;
                 break;
             case 2:
                 longi = stof(line);
-                cout<<longi<<endl;
+                //cout<<longi<<endl;
                 this->myListSensors.insert(std::pair<string, Sensor *>(id, new Sensor(id, lat, longi, 0)));
                 break;
             default:
