@@ -221,7 +221,7 @@ DataManipulation::DataManipulation()
     }
     else cout << "Unable to open file" << endl;
    
-    cout << "Données cleaners chargée" << endl;
+    cout << "Données cleaners chargées" << endl;
     // Sensor
     ifstream sensorsFile("dataset/sensors.csv");
     i = 0;
@@ -257,16 +257,8 @@ DataManipulation::DataManipulation()
     }
     else cout << "Unable to open file" << endl;
     
-    cout << "Données cleaners chargée" << endl;
-    /* affichage de la list sensor
+    cout << "Données sensors chargées" << endl;
 
-    cout<<myListSensors["Sensor1"]<<endl;
-
-    for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
-    std::cout << it->first << " => " << it->second->getLatitude() << endl;
-    
-    cout<<myListSensors.size()<<endl;
-    */
 
     // attribute
 
@@ -281,18 +273,10 @@ DataManipulation::DataManipulation()
         int premiereLigne = true;
         while (getline(attributeFile, line, ';'))
         {
-            
+            line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
             switch (i)
             {
             case 0:
-                if (premiereLigne==false && line != "\n" && line != "")
-                {
-                    line.erase(0, 2);
-                }
-                if(premiereLigne==true)
-                {
-                    premiereLigne=false;
-                }
                 attributeId = line;
                 break;
             case 1:
@@ -300,6 +284,7 @@ DataManipulation::DataManipulation()
                 break;
             case 2:
                 description = line;
+                //cout << attributeId<< " "<<unit<<" " <<description << endl;
                 listAttribute[attributeId]=pair<string,string>(unit, description);
                 break;
             default:
@@ -313,7 +298,8 @@ DataManipulation::DataManipulation()
 
     }
     else cout << "Unable to open file" << endl;
-
+    
+    cout << "Données Attribute Chargée" << endl;
     // measure
 
     string timeStamp;
