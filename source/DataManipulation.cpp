@@ -185,10 +185,6 @@ DataManipulation::DataManipulation()
     tm myDate;
     float lat, longi;
     int i = 0;
-    struct tm myDate1;
-    struct tm myDate2;
-    time_t timestamp1;
-    time_t timestamp2;
     if (cleanersFile.is_open())
     {
         while (getline(cleanersFile, line, ';'))
@@ -219,7 +215,7 @@ DataManipulation::DataManipulation()
                 myDate.tm_min = stoi(line.substr(14,2));
                 myDate.tm_sec = stoi(line.substr(17,2));
                 timestampStart = mktime( & myDate );
-                printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
+                //printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
                 //cout<<"start "<<start<<endl;
                 break;
             case 4:
@@ -231,7 +227,7 @@ DataManipulation::DataManipulation()
                 myDate.tm_min = stoi(line.substr(14,2));
                 myDate.tm_sec = stoi(line.substr(17,2));
                 timestampStop = mktime( & myDate );
-                printf( "Timestamp == %s\n", asctime(localtime(&timestampStop)) );
+                //printf( "Timestamp == %s\n", asctime(localtime(&timestampStop)) );
                 //cout<<"stop "<<stop<<endl;
                 this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, timestampStart, timestampStop)));
                 break;
@@ -324,14 +320,12 @@ DataManipulation::DataManipulation()
     cout << "Données Attribute chargées" << endl;
     // measure
 
-    string timeStamp;
     float value;
 
     ifstream measuresFile("dataset/measurements.csv");
     //ifstream measuresFile("datasetTest/measurementsTest.csv");
     i = 0;
-    struct tm myDate;
-    time_t timestamp;
+
     if (measuresFile.is_open())
     {
         while (getline(measuresFile, line, ';'))
@@ -340,6 +334,7 @@ DataManipulation::DataManipulation()
             switch (i)
             {
             case 0:
+
                 myDate.tm_year = stoi(line.substr(0,4));
                 myDate.tm_mon = stoi(line.substr(5,2));
                 myDate.tm_mday = stoi(line.substr(8,2));
@@ -347,7 +342,7 @@ DataManipulation::DataManipulation()
                 myDate.tm_min = stoi(line.substr(14,2));
                 myDate.tm_sec = stoi(line.substr(17,2));
                 timestampStart = mktime( & myDate );
-                printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
+                //printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
                 //cout<<timeStamp<<endl;
                 break;
             case 1:
