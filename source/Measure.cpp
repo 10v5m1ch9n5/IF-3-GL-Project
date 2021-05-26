@@ -33,7 +33,7 @@ string Measure::getSensorId()
     return sensorId;
 }
     
-string Measure::getTimeStamp()
+time_t Measure::getTimeStamp()
 {
     return timeStamp;
 }
