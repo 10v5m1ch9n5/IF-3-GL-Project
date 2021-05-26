@@ -73,7 +73,7 @@ public:
     // Contrat :
     //
 
-    Measure (string id, string time, float value, string attributeId, string unit, string description);
+    Measure (string id, time_t time, float value, string attributeId, string unit, string description);
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 

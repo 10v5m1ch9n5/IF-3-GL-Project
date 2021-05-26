@@ -74,7 +74,7 @@ airQuality averageAirQuality(int valeur)
 void DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius)
 {
 
-    
+
 } // -----
 
 void DataManipulation::verifyPointAirQuality(float longitude, float latitude)
@@ -185,6 +185,10 @@ DataManipulation::DataManipulation()
     tm myDate;
     float lat, longi;
     int i = 0;
+    struct tm myDate1;
+    struct tm myDate2;
+    time_t timestamp1;
+    time_t timestamp2;
     if (cleanersFile.is_open())
     {
         while (getline(cleanersFile, line, ';'))
@@ -326,6 +330,8 @@ DataManipulation::DataManipulation()
     ifstream measuresFile("dataset/measurements.csv");
     //ifstream measuresFile("datasetTest/measurementsTest.csv");
     i = 0;
+    struct tm myDate;
+    time_t timestamp;
     if (measuresFile.is_open())
     {
         while (getline(measuresFile, line, ';'))

@@ -63,7 +63,7 @@ Measure:: ~Measure ( )
   	delete(myAttribute);
 }
 
-Measure::Measure (string id, string time, float value, string attributeId, string unit, string description)
+Measure::Measure (string id, time_t time, float value, string attributeId, string unit, string description)
 {
 	#ifdef MAP
 	cout << "Appel au constructeur de Measure" << endl;
