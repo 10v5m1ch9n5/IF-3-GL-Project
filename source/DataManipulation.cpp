@@ -174,7 +174,7 @@ DataManipulation::DataManipulation()
 
     string line;
 
-    // Air Cleaner
+      // Air Cleaner
 
     ifstream cleanersFile("dataset/cleaners.csv");
     string  id, start, stop, nomEntreprise;
@@ -183,33 +183,32 @@ DataManipulation::DataManipulation()
     int i = 0;
     if (cleanersFile.is_open())
     {
-        int premiereLigne=true;
         while (getline(cleanersFile, line, ';'))
         {
+            //remove \n from line
+            line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+            //cout<<"LINE "<<line<<endl;
             switch (i)
             {
             case 0:
-                if (premiereLigne==false && line != "\n" && line != "")
-                {
-                    line.erase(0, 2);
-                }
-                if(premiereLigne==true)
-                {
-                    premiereLigne=false;
-                }
                 id = line;
+                //cout<<"ID "<<id<<endl;
                 break;
             case 1:
                 lat = stof(line);
+                //cout<<"lat "<<lat<<endl;
                 break;
             case 2:
                 longi = stof(line);
+                //cout<<"long "<<longi<<endl;
                 break;
             case 3:
                 start = line;
+                //cout<<"start "<<start<<endl;
                 break;
             case 4:
                 stop = line;
+                //cout<<"stop "<<stop<<endl;
                 this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, start, stop)));
                 break;
             default:
@@ -221,7 +220,8 @@ DataManipulation::DataManipulation()
         cleanersFile.close();
     }
     else cout << "Unable to open file" << endl;
-
+   
+    cout << "Données cleaners chargée" << endl;
     // Sensor
     ifstream sensorsFile("dataset/sensors.csv");
     i = 0;
@@ -231,27 +231,20 @@ DataManipulation::DataManipulation()
         int premiereLigne=true;
         while (getline(sensorsFile, line, ';'))
         { 
+            line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
             switch (i)
             {
             case 0:
-                
-                // condition qui permet de supprimer les caractères indésirables
-
-                if (premiereLigne==false && line != "\n" && line != "")
-                {
-                    line.erase(0, 2);
-                }
-                if(premiereLigne==true)
-                {
-                    premiereLigne=false;
-                }
                 id=line;
+                cout<<id<<endl;
                 break;
             case 1:
                 lat = stof(line);
+                cout<<lat<<endl;
                 break;
             case 2:
                 longi = stof(line);
+                cout<<longi<<endl;
                 this->myListSensors.insert(std::pair<string, Sensor *>(id, new Sensor(id, lat, longi, 0)));
                 break;
             default:
@@ -261,8 +254,6 @@ DataManipulation::DataManipulation()
             i = (i + 1) % 3;
         }
         sensorsFile.close();
-
-
     }
     else cout << "Unable to open file" << endl;
 
