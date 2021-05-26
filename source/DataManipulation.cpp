@@ -72,6 +72,8 @@ airQuality averageAirQuality(int valeur)
 
 void DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius)
 {
+
+    
 } // -----
 
 void DataManipulation::verifyPointAirQuality(float longitude, float latitude)
@@ -338,9 +340,6 @@ DataManipulation::DataManipulation()
             
         }
         measuresFile.close();
-        
-
-
     }
     else cout << "Unable to open file" << endl;
     cout << "Données Mesures chargées" << endl;

@@ -12,6 +12,7 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <time.h>
 
 #include "Attribute.h"
 
@@ -39,7 +40,7 @@ public:
     // Contrat : 
     //
     
-  	string getTimeStamp();
+  	time_t getTimeStamp();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
@@ -87,7 +88,7 @@ private:
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
     string sensorId;
-    string timeStamp;
+    time_t timeStamp;
     float value;
     Attribute * myAttribute;
 };
