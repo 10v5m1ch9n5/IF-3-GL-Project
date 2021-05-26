@@ -12,6 +12,8 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
+#include <time.h>
+
 using namespace std;
 //------------------------------------------------------------- Constantes
 
@@ -43,14 +45,14 @@ public:
     // Contrat : 
     //
 
-    string getTimeStampStart();
+    time_t getTimeStampStart();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
     // Contrat : 
     //
 
-    string getTimeStampStop();
+    time_t getTimeStampStop();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
@@ -69,7 +71,7 @@ public:
     // Contrat :
     //
 
-    AirCleaner (string id, float lat, float longi, string start, string stop, string nomEntreprise="");
+    AirCleaner (string id, float lat, float longi, time_t start, time_t stop, string nomEntreprise="");
     // Mode d'emploi (constructeur de copie) : 
     //
     // Contrat : 
@@ -86,8 +88,8 @@ private:
     string cleanerId;
     float latitude;
     float longitude;
-    string timeStampStart;
-    string timeStampStop;
+    time_t timeStampStart;
+    time_t timeStampStop;
     string nomEntreprise;
 };
 

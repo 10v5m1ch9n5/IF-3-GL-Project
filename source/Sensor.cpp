@@ -228,7 +228,7 @@ string Sensor::getSensorID()
     return sensorId;
 }
 
-pair<float,float> Sensor::getAirQuality(string timeStart, string timeStop)
+pair<float,float> Sensor::getAirQuality(time_t timeStart, time_t timeStop)
 {
     float qualityBefore=0;
     float qualityAfter=0;
@@ -237,25 +237,25 @@ pair<float,float> Sensor::getAirQuality(string timeStart, string timeStop)
 
     pair<MMAPIterator, MMAPIterator> result;
     
-    result = myListMeasures.equal_range(timeStart);
+     result = myListMeasures.equal_range(timeStart);
 
     //cout<<timeStart<<" "<<timeStop<<endl;
 
     for(MMAPIterator it = result.first; it != result.second; it++)
     {
         qualityBefore=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityBefore);
-    }
-    timeStop[6]=timeStart[6];
+    } 
+    /* timeStop[6]=timeStart[6];
     timeStop[8]=50;
     timeStop[9]=56;
     timeStop[11]=timeStart[11];
-    timeStop[12]=timeStart[12];
-    result = myListMeasures.equal_range(timeStop);
+    timeStop[12]=timeStart[12]; */
+     result = myListMeasures.equal_range(timeStop);
 
     for(MMAPIterator it = result.first; it != result.second; it++)
     {
         qualityAfter=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityAfter);
-    }
+    } 
 
     pair<float,float> difference;
 
@@ -286,15 +286,15 @@ int Sensor::getUserID()
 }
 
 
-multimap<std::string, Measure*> Sensor::getMeasure()
+multimap<time_t, Measure*> Sensor::getMeasure()
 {
     return myListMeasures;
 }
 
-void Sensor::addMeasure(string id, string time, float value, string attributeId, string unit, string description)
+void Sensor::addMeasure(string id, time_t time, float value, string attributeId, string unit, string description)
 {
     Measure * myMeasure = new Measure(id, time, value, attributeId, unit, description);
-    this->myListMeasures.insert(std::pair<string,Measure*>(time,myMeasure));
+    this->myListMeasures.insert(std::pair<int,Measure*>(time,myMeasure));
     
 }
 
@@ -306,7 +306,7 @@ Sensor:: ~Sensor()
         cout << "Appel au destructeur de Sensor" << endl;
     #endif
 
-    for (std::map<string,Measure*>::iterator it=this->myListMeasures.begin(); it!=this->myListMeasures.end(); ++it)
+    for (std::map<time_t,Measure*>::iterator it=this->myListMeasures.begin(); it!=this->myListMeasures.end(); ++it)
         delete(it->second);
 }
 

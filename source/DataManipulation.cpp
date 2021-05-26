@@ -15,6 +15,8 @@
 #include <iostream>
 #include <math.h>
 #include <algorithm>
+#include <time.h>
+
 //------------------------------------------------------ Include personnel
 #include "../interface/DataManipulation.h"
 
@@ -73,7 +75,7 @@ airQuality averageAirQuality(int valeur)
 void DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius)
 {
 
-    
+
 } // -----
 
 void DataManipulation::verifyPointAirQuality(float longitude, float latitude)
@@ -183,6 +185,10 @@ DataManipulation::DataManipulation()
     
     float lat, longi;
     int i = 0;
+    struct tm myDate1;
+    struct tm myDate2;
+    time_t timestamp1;
+    time_t timestamp2;
     if (cleanersFile.is_open())
     {
         while (getline(cleanersFile, line, ';'))
@@ -206,12 +212,18 @@ DataManipulation::DataManipulation()
                 break;
             case 3:
                 start = line;
+                myDate1.tm_sec = 15;     // Time == 12:30:15
+                timestamp1= mktime( & myDate1 );
+                printf( "Timestamp == %ld\n", timestamp1 );
                 //cout<<"start "<<start<<endl;
                 break;
             case 4:
                 stop = line;
+                myDate2.tm_sec = 15;     // Time == 12:30:15
+                timestamp2= mktime( & myDate2 );
+                printf( "Timestamp == %ld\n", timestamp2 );
                 //cout<<"stop "<<stop<<endl;
-                this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, start, stop)));
+                this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, timestamp1, timestamp2)));
                 break;
             default:
                 cout << "error" << endl;
@@ -308,6 +320,8 @@ DataManipulation::DataManipulation()
     ifstream measuresFile("dataset/measurements.csv");
     //ifstream measuresFile("datasetTest/measurementsTest.csv");
     i = 0;
+    struct tm myDate;
+    time_t timestamp;
     if (measuresFile.is_open())
     {
         while (getline(measuresFile, line, ';'))
@@ -315,26 +329,29 @@ DataManipulation::DataManipulation()
               line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
             switch (i)
             {
-            case 0:
-                timeStamp = line;
-                //cout<<timeStamp<<endl;
-                break;
-            case 1:
-                id = line;
-                //cout<<id<<endl;
-                break;
-            case 2:
-                attributeId = line;
-                //cout<<attributeId<<endl;
-                break;
-            case 3:
-                value = stof(line);
-                //cout<<value<<endl;
-                this->myListSensors[id]->addMeasure(id,timeStamp,value,attributeId,listAttribute[attributeId].first,listAttribute[attributeId].second);
-                break;
-            default:
-                cout << "error" << endl;
-                break;
+                case 0:
+                    timeStamp = line;
+                    myDate.tm_sec = 15;     // Time == 12:30:15
+                    timestamp= mktime( & myDate );
+                    printf( "Timestamp == %ld\n", timestamp );
+                    cout<<timeStamp<<endl;
+                    break;
+                case 1:
+                    id = line;
+                    //cout<<id<<endl;
+                    break;
+                case 2:
+                    attributeId = line;
+                    //cout<<attributeId<<endl;
+                    break;
+                case 3:
+                    value = stof(line);
+                    //cout<<value<<endl;
+                    this->myListSensors[id]->addMeasure(id,timestamp,value,attributeId,listAttribute[attributeId].first,listAttribute[attributeId].second);
+                    break;
+                default:
+                    cout << "error" << endl;
+                    break;
             }
             i = (i + 1) % 4;
             
