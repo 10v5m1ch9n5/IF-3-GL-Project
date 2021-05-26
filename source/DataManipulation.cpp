@@ -228,7 +228,6 @@ DataManipulation::DataManipulation()
     
     if (sensorsFile.is_open())
     {
-        int premiereLigne=true;
         while (getline(sensorsFile, line, ';'))
         { 
             line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
@@ -270,7 +269,6 @@ DataManipulation::DataManipulation()
     i = 0;
     if (attributeFile.is_open())
     {
-        int premiereLigne = true;
         while (getline(attributeFile, line, ';'))
         {
             line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
@@ -299,7 +297,7 @@ DataManipulation::DataManipulation()
     }
     else cout << "Unable to open file" << endl;
     
-    cout << "Données Attribute Chargée" << endl;
+    cout << "Données Attribute chargées" << endl;
     // measure
 
     string timeStamp;
@@ -310,31 +308,26 @@ DataManipulation::DataManipulation()
     i = 0;
     if (measuresFile.is_open())
     {
-        int premiereLigne = true;
         while (getline(measuresFile, line, ';'))
         {
-            
+              line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
             switch (i)
             {
             case 0:
-                if (premiereLigne==false && line != "\n" && line != "")
-                {
-                    line.erase(0, 2);
-                }
-                if(premiereLigne==true)
-                {
-                    premiereLigne=false;
-                }
                 timeStamp = line;
+                //cout<<timeStamp<<endl;
                 break;
             case 1:
                 id = line;
+                //cout<<id<<endl;
                 break;
             case 2:
                 attributeId = line;
+                //cout<<attributeId<<endl;
                 break;
             case 3:
                 value = stof(line);
+                //cout<<value<<endl;
                 this->myListSensors[id]->addMeasure(id,timeStamp,value,attributeId,listAttribute[attributeId].first,listAttribute[attributeId].second);
                 break;
             default:
@@ -350,6 +343,7 @@ DataManipulation::DataManipulation()
 
     }
     else cout << "Unable to open file" << endl;
+    cout << "Données Mesures chargées" << endl;
 
 }
 //------------------------------------------------------------------ PRIVE
