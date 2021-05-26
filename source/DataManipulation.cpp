@@ -16,7 +16,6 @@
 #include <math.h>
 #include <algorithm>
 #include <time.h>
-
 //------------------------------------------------------ Include personnel
 #include "../interface/DataManipulation.h"
 
@@ -181,8 +180,9 @@ DataManipulation::DataManipulation()
       // Air Cleaner
 
     ifstream cleanersFile("dataset/cleaners.csv");
-    string  id, start, stop, nomEntreprise;
-    
+    string  id, nomEntreprise;
+    time_t timestampStart, timestampStop;
+    tm myDate;
     float lat, longi;
     int i = 0;
     struct tm myDate1;
@@ -196,6 +196,7 @@ DataManipulation::DataManipulation()
             //remove \n from line
             line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
             //cout<<"LINE "<<line<<endl;
+            
             switch (i)
             {
             case 0:
@@ -211,19 +212,28 @@ DataManipulation::DataManipulation()
                 //cout<<"long "<<longi<<endl;
                 break;
             case 3:
-                start = line;
-                myDate1.tm_sec = 15;     // Time == 12:30:15
-                timestamp1= mktime( & myDate1 );
-                printf( "Timestamp == %ld\n", timestamp1 );
+                myDate.tm_year = stoi(line.substr(0,4));
+                myDate.tm_mon = stoi(line.substr(5,2));
+                myDate.tm_mday = stoi(line.substr(8,2));
+                myDate.tm_hour = stoi(line.substr(11,2));
+                myDate.tm_min = stoi(line.substr(14,2));
+                myDate.tm_sec = stoi(line.substr(17,2));
+                timestampStart = mktime( & myDate );
+                printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
                 //cout<<"start "<<start<<endl;
                 break;
             case 4:
-                stop = line;
-                myDate2.tm_sec = 15;     // Time == 12:30:15
-                timestamp2= mktime( & myDate2 );
-                printf( "Timestamp == %ld\n", timestamp2 );
+
+                myDate.tm_year = stoi(line.substr(0,4));
+                myDate.tm_mon = stoi(line.substr(5,2));
+                myDate.tm_mday = stoi(line.substr(8,2));
+                myDate.tm_hour = stoi(line.substr(11,2));
+                myDate.tm_min = stoi(line.substr(14,2));
+                myDate.tm_sec = stoi(line.substr(17,2));
+                timestampStop = mktime( & myDate );
+                printf( "Timestamp == %s\n", asctime(localtime(&timestampStop)) );
                 //cout<<"stop "<<stop<<endl;
-                this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, timestamp1, timestamp2)));
+                this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, timestampStart, timestampStop)));
                 break;
             default:
                 cout << "error" << endl;
@@ -329,29 +339,33 @@ DataManipulation::DataManipulation()
               line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
             switch (i)
             {
-                case 0:
-                    timeStamp = line;
-                    myDate.tm_sec = 15;     // Time == 12:30:15
-                    timestamp= mktime( & myDate );
-                    printf( "Timestamp == %ld\n", timestamp );
-                    cout<<timeStamp<<endl;
-                    break;
-                case 1:
-                    id = line;
-                    //cout<<id<<endl;
-                    break;
-                case 2:
-                    attributeId = line;
-                    //cout<<attributeId<<endl;
-                    break;
-                case 3:
-                    value = stof(line);
-                    //cout<<value<<endl;
-                    this->myListSensors[id]->addMeasure(id,timestamp,value,attributeId,listAttribute[attributeId].first,listAttribute[attributeId].second);
-                    break;
-                default:
-                    cout << "error" << endl;
-                    break;
+            case 0:
+                myDate.tm_year = stoi(line.substr(0,4));
+                myDate.tm_mon = stoi(line.substr(5,2));
+                myDate.tm_mday = stoi(line.substr(8,2));
+                myDate.tm_hour = stoi(line.substr(11,2));
+                myDate.tm_min = stoi(line.substr(14,2));
+                myDate.tm_sec = stoi(line.substr(17,2));
+                timestampStart = mktime( & myDate );
+                printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
+                //cout<<timeStamp<<endl;
+                break;
+            case 1:
+                id = line;
+                //cout<<id<<endl;
+                break;
+            case 2:
+                attributeId = line;
+                //cout<<attributeId<<endl;
+                break;
+            case 3:
+                value = stof(line);
+                //cout<<value<<endl;
+                this->myListSensors[id]->addMeasure(id,timestampStart,value,attributeId,listAttribute[attributeId].first,listAttribute[attributeId].second);
+                break;
+            default:
+                cout << "error" << endl;
+                break;
             }
             i = (i + 1) % 4;
             
