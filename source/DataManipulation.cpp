@@ -14,7 +14,7 @@
 #include <fstream>
 #include <iostream>
 #include <math.h>
-
+#include <algorithm>
 //------------------------------------------------------ Include personnel
 #include "../interface/DataManipulation.h"
 
@@ -256,7 +256,8 @@ DataManipulation::DataManipulation()
         sensorsFile.close();
     }
     else cout << "Unable to open file" << endl;
-
+    
+    cout << "Données cleaners chargée" << endl;
     /* affichage de la list sensor
 
     cout<<myListSensors["Sensor1"]<<endl;
