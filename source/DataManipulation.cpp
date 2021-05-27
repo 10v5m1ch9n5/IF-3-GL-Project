@@ -127,19 +127,24 @@ void DataManipulation::checkImpactAirCleaner(string airCleanerId, float radius)
 
     float before=0;
     float after=0;
-    pair<float,float> res;
     for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
     {
         cout<<"sensor id : "<<it->second->getSensorID()<<" | size list "<<it->second->getMeasure().size()<<endl;
-        res=it->second->getAirQuality(myAirCleaner->getTimeStampStart(), myAirCleaner->getTimeStampStop());
-        before+=res.first;
-        after+=res.second;
+        cout<<endl<<"avant"<<endl<<endl;
+        // -3600*24 pour avoir les analyses du dernier jour avant la début du air cleaner
+        before+=it->second->getAirQuality(myAirCleaner->getTimeStampStart()-3600*24);
+        
+        cout<<endl<<"apres"<<endl<<endl;
+        // -3600*24 pour avoir les analyses du dernier jour avant la fin du air cleaner
+        after+=it->second->getAirQuality(myAirCleaner->getTimeStampStop()-3600*24);
+        
     }
 
     cout<<"before : "<<before<<" | after : "<<after<<endl;
 
     if(sensorInRadius.size()!=0)
-    {
+    {   
+
         airQuality qualityBefore = averageAirQuality(before/sensorInRadius.size());
 
         airQuality qualityAfter = averageAirQuality(after/sensorInRadius.size());
@@ -183,6 +188,12 @@ DataManipulation::DataManipulation()
     string  id, nomEntreprise;
     time_t timestampStart, timestampStop;
     tm myDate;
+    myDate.tm_year = 0;
+    myDate.tm_mon = 0;
+    myDate.tm_mday =0;
+    myDate.tm_hour = 0;
+    myDate.tm_min = 0;
+    myDate.tm_sec =0;
     float lat, longi;
     int i = 0;
     if (cleanersFile.is_open())
@@ -208,26 +219,39 @@ DataManipulation::DataManipulation()
                 //cout<<"long "<<longi<<endl;
                 break;
             case 3:
-                myDate.tm_year = stoi(line.substr(0,4));
-                myDate.tm_mon = stoi(line.substr(5,2));
+                cout<<line<<endl;
+                myDate.tm_year = stoi(line.substr(0,4))-1900;
+                myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
-                myDate.tm_hour = stoi(line.substr(11,2));
-                myDate.tm_min = stoi(line.substr(14,2));
-                myDate.tm_sec = stoi(line.substr(17,2));
+                //myDate.tm_hour = stoi(line.substr(11,2));
+                //myDate.tm_min = stoi(line.substr(14,2));
+                //myDate.tm_sec = stoi(line.substr(17,2));
+                myDate.tm_hour = 12;
+                myDate.tm_min = 0;   
+                myDate.tm_sec = 0; 
                 timestampStart = mktime( & myDate );
-                //printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
-                //cout<<"start "<<start<<endl;
+                /*cout<<myDate.tm_year<<endl;
+                cout<<myDate.tm_mon<<endl;
+                cout<<myDate.tm_mday<<endl;
+                cout<<myDate.tm_hour<<endl;
+                cout<<myDate.tm_min<<endl;
+                cout<<myDate.tm_sec<<endl;
+                
+                printf( "Timestamp2 == %s\n", asctime(localtime(&timestampStart)) );*/
                 break;
             case 4:
 
-                myDate.tm_year = stoi(line.substr(0,4));
-                myDate.tm_mon = stoi(line.substr(5,2));
+                myDate.tm_year = stoi(line.substr(0,4))-1900;
+                myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
-                myDate.tm_hour = stoi(line.substr(11,2));
-                myDate.tm_min = stoi(line.substr(14,2));
-                myDate.tm_sec = stoi(line.substr(17,2));
+                //myDate.tm_hour = stoi(line.substr(11,2));
+                //myDate.tm_min = stoi(line.substr(14,2));
+                //myDate.tm_sec = stoi(line.substr(17,2));
+                myDate.tm_hour = 12;
+                myDate.tm_min = 0;   
+                myDate.tm_sec = 0; 
                 timestampStop = mktime( & myDate );
-                //printf( "Timestamp == %s\n", asctime(localtime(&timestampStop)) );
+                printf( "Timestamp == %s\n", asctime(localtime(&timestampStop)) );
                 //cout<<"stop "<<stop<<endl;
                 this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, timestampStart, timestampStop)));
                 break;
@@ -335,13 +359,19 @@ DataManipulation::DataManipulation()
             {
             case 0:
 
-                myDate.tm_year = stoi(line.substr(0,4));
-                myDate.tm_mon = stoi(line.substr(5,2));
+                myDate.tm_year = stoi(line.substr(0,4))-1900;
+                myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
-                myDate.tm_hour = stoi(line.substr(11,2));
-                myDate.tm_min = stoi(line.substr(14,2));
-                myDate.tm_sec = stoi(line.substr(17,2));
+                //myDate.tm_hour = stoi(line.substr(11,2));
+                //myDate.tm_min = stoi(line.substr(14,2));
+                //myDate.tm_sec = stoi(line.substr(17,2));
+                myDate.tm_hour = 12;
+                myDate.tm_min = 0;   
+                myDate.tm_sec = 0; 
                 timestampStart = mktime( & myDate );
+                //cout<<myDate.tm_year<<" "<<myDate.tm_mon<<" "<<myDate.tm_mday<<" "<<myDate.tm_hour<<" "<<myDate.tm_min<<" "<<myDate.tm_sec<<endl;
+                
+                //
                 //printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
                 //cout<<timeStamp<<endl;
                 break;

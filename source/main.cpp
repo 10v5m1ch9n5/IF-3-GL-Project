@@ -1,13 +1,15 @@
 #include <iostream>
-
+#include <ctime>
 #include "../interface/DataManipulation.h"
 using namespace std;
 
 int main()
 {
+
     DataManipulation * test = new DataManipulation();
 
-    for(int i=0; i<3;i++)
+    
+    for(int i=0; i<1;i++)
     {
         cout<<endl<<"----- "<<0.5+i*0.05<<" -----"<<endl<<endl;
         cout<<"check impact air cleaner 0"<<endl;

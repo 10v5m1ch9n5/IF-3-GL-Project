@@ -67,7 +67,7 @@ public:
     // Contrat :
     //
 
-    pair<float,float> getAirQuality(time_t timeStart, time_t timeStop);
+    float getAirQuality(time_t time);
 
     void addMeasure(string id, time_t time, float value, string attributeId, string unit, string description);
 
