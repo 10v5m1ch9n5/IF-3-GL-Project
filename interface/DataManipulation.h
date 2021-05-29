@@ -33,7 +33,7 @@ class DataManipulation
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    void verifyAreaAirQuality(float longitude, float latitude, float radius);
+    float verifyAreaAirQuality(float longitude, float latitude, float radius, time_t time);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //

@@ -238,6 +238,12 @@ float Sensor::getAirQuality(time_t time)
     
     result = myListMeasures.equal_range(time);
 
+    // Dans le cas où on a trouvé aucune mesure correspondant au temps spécifié
+    if(result.first == result.second)
+    {
+        return -1;
+    }
+
     for(MMAPIterator it = result.first; it != result.second; it++)
     {
         nbrMesure+=1;

@@ -74,10 +74,51 @@ airQuality averageAirQuality(int valeur)
 
 //----------------------------------------------------- Méthodes publiques
 
-void DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius)
+float DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius, time_t time)
 {
+    map<string, Sensor*> sensorInRadius;
 
+    for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
+    {
+        if( pow(pow(it->second->getLatitude()-latitude,2)+pow(it->second->getLongitude()-longitude,2),0.5) <= radius )
+        {
+            sensorInRadius[it->first]=it->second;
+        }
+    }
 
+    int nbrSensor = sensorInRadius.size();
+
+    // dans le cas où il n'y a aucun capteur dans la zone on renvoit le code -1
+
+    if(nbrSensor==0)
+    {
+        return -1;
+    }
+
+    float valueSanity;
+    float valueToReturn=0;
+
+    for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
+    {        
+        valueSanity=it->second->getAirQuality(time);
+
+        // Si valueSanity à la valuer -1 lors il n'y a aucune mesure pour ce capteur et pour ce temps donné 
+        if(valueSanity == -1){
+            nbrSensor -= 1;
+        } else {
+            valueToReturn+=valueSanity;
+        }
+    }
+
+    // si nbrSensor vaut 0 alors cela signifie qu'il n'y a aucune mesure qui correspond  
+    // à ce temps dans la zone, on renvoie le code -2
+    if(nbrSensor==0)
+    {
+        return -2;
+    } else
+    {
+        return valueToReturn/nbrSensor;
+    }
 } // -----
 
 void DataManipulation::verifyPointAirQuality(float longitude, float latitude)
@@ -103,7 +144,7 @@ float DataManipulation::checkImpactedRadiusAirCleaner(string airCleanerId)
     while( (quality.first - quality.second)!= 0 || (quality.first==-1) )
     {
         //cout<<quality.first<<" | "<<radius<<" | "<<quality.second<<endl;
-        
+
         valueBefore=quality.first;
         radius+=0.1;
         quality = checkImpactAirCleaner(airCleanerId, radius);
@@ -151,9 +192,10 @@ pair<int,int> DataManipulation::checkImpactAirCleaner(string airCleanerId, float
         }
     }
 
+    int nbrSensor = sensorInRadius.size();
     //cout<<"sensor in radius "<<sensorInRadius.size()<<endl;
 
-    if(sensorInRadius.size()==0)
+    if(nbrSensor==0)
     {
         //dans le cas où il n'y a pas de sensor dans le rayon, on renvoie -1
         return make_pair(-1,-1);
@@ -161,18 +203,32 @@ pair<int,int> DataManipulation::checkImpactAirCleaner(string airCleanerId, float
 
     float before=0;
     float after=0;
+    float value;
     for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
     {
         //cout<<"sensor id : "<<it->second->getSensorID()<<" | size list "<<it->second->getMeasure().size()<<endl;
         //cout<<endl<<"avant"<<endl<<endl;
 
         // -3600*24 pour avoir les analyses du dernier jour avant la début du air cleaner
-        before+=it->second->getAirQuality(myAirCleaner->getTimeStampStart()-3600*24);
+
+        value=it->second->getAirQuality(myAirCleaner->getTimeStampStart()-3600*24);
         
+        if(value==-1){
+            nbrSensor -= 1;
+        }else{
+            before+=value;
+        }
+
         //cout<<endl<<"apres"<<endl<<endl;
         
         // -3600*24 pour avoir les analyses du dernier jour avant la fin du air cleaner
-        after+=it->second->getAirQuality(myAirCleaner->getTimeStampStop()-3600*24);
+        value=it->second->getAirQuality(myAirCleaner->getTimeStampStop()-3600*24);
+
+        if(value==-1){
+            nbrSensor -= 1;
+        }else{
+            after+=value;
+        }
         
     }
 
@@ -181,12 +237,11 @@ pair<int,int> DataManipulation::checkImpactAirCleaner(string airCleanerId, float
     airQuality qualityBefore, qualityAfter;
 
 
-    qualityBefore = averageAirQuality(before/sensorInRadius.size());
+    qualityBefore = averageAirQuality(before/nbrSensor);
 
-    qualityAfter = averageAirQuality(after/sensorInRadius.size());
+    qualityAfter = averageAirQuality(after/nbrSensor);
 
     //cout<<"Qualite --plus c'est proche de 0 plus c'est bon--"<<endl<<"before : "<<qualityBefore<<" | after : "<<qualityAfter<<endl;
-
 
     return make_pair(qualityBefore,qualityAfter);
 } // -----

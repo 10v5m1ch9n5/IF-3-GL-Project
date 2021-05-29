@@ -27,6 +27,19 @@ int main()
 
     cout<<"check impact air cleaner 1"<<endl;
     cout<<"radius : "<<test->checkImpactedRadiusAirCleaner("Cleaner1")<<endl;
+
+    cout<<endl<<"vérifier la qualité de l'air dans une zone"<<endl;
+
+    tm day;
+    day.tm_year=119;
+    day.tm_mday=23;
+    day.tm_mon=8;
+    day.tm_hour=12;
+    day.tm_sec=0;
+    day.tm_min=0;
+    time_t time =  mktime(&day);
+
+    cout<<"qualite : "<<test->verifyAreaAirQuality(1.2,46.2,1, time)<<endl;
     delete(test);
     return 0;
 }
