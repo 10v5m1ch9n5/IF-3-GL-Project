@@ -74,7 +74,7 @@ airQuality averageAirQuality(int valeur)
 
 //----------------------------------------------------- Méthodes publiques
 
-int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius, time_t time)
+int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius, time_t firstDay)
 {
     map<string, Sensor*> sensorInRadius;
 
@@ -100,7 +100,7 @@ int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, floa
 
     for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
     {        
-        valueSanity=it->second->getAirQuality(time);
+        valueSanity=it->second->getAirQuality(firstDay);
 
         // Si valueSanity à la valuer -1 lors il n'y a aucune mesure pour ce capteur et pour ce temps donné 
         if(valueSanity == -1){

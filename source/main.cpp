@@ -42,7 +42,6 @@ int main()
 
     cout<<"qualite : "<<test->verifyAreaAirQuality(1.2,46.2,1, time)<<endl;
 
-    test->listAllSensor();
     delete(test);
     return 0;
 }
