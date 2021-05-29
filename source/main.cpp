@@ -8,19 +8,25 @@ int main()
 
     DataManipulation * test = new DataManipulation();
 
-    
-    for(int i=0; i<1;i++)
-    {
-        cout<<endl<<"----- "<<0.5+i*0.05<<" -----"<<endl<<endl;
-        cout<<"check impact air cleaner 0"<<endl;
+    pair<int,int> result;
 
-        test->checkImpactAirCleaner("Cleaner0",0.5+i*0.05);
+    cout<<endl<<"----- "<<0.5<<" -----"<<endl<<endl;
 
-        cout<<"check impact air cleaner 1"<<endl;
+    cout<<"check impact air cleaner 0"<<endl;
+    result=test->checkImpactAirCleaner("Cleaner0",0.5);
+    cout<<"before : "<<result.first<<" | after : "<<result.second<<endl;
 
-        test->checkImpactAirCleaner("Cleaner1",0.5+i*0.05);
-    }
-    
+    cout<<"check impact air cleaner 1"<<endl;
+    result=test->checkImpactAirCleaner("Cleaner1",0.5);
+    cout<<"before : "<<result.first<<" | after : "<<result.second<<endl;
+
+    cout<<endl<<"----- radius impacted -----"<<endl<<endl;
+
+    cout<<"check impact air cleaner 0"<<endl;
+    cout<<"radius : "<<test->checkImpactedRadiusAirCleaner("Cleaner0")<<endl;
+
+    cout<<"check impact air cleaner 1"<<endl;
+    cout<<"radius : "<<test->checkImpactedRadiusAirCleaner("Cleaner1")<<endl;
     delete(test);
     return 0;
 }

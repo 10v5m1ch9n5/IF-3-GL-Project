@@ -195,7 +195,7 @@ int getAirQualityNO2(float value)
 
 int calcSingleAirQuality(string attributId, float valeur, int total)
 {
-    cout<<attributId<<" "<<valeur<<" total : "<<total<<endl;
+    //cout<<attributId<<" "<<valeur<<" total : "<<total<<endl;
     if(!attributId.compare("O3"))
     {
         total+=getAirQualityO3(valeur);
@@ -238,15 +238,13 @@ float Sensor::getAirQuality(time_t time)
     
     result = myListMeasures.equal_range(time);
 
-    //cout<<" time : "<<time<<" "<<asctime(localtime(&time))<<endl;
-
     for(MMAPIterator it = result.first; it != result.second; it++)
     {
         nbrMesure+=1;
         quality=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), quality);
     } 
-    cout<<"nbr mesure : "<<nbrMesure<<" quality : "<<quality/nbrMesure<<endl;
-    /*for(MMAPIterator it = myListMeasures.begin(); it != myListMeasures.end(); it++)
+    /*cout<<"nbr mesure : "<<nbrMesure<<" quality : "<<quality/nbrMesure<<endl;
+    for(MMAPIterator it = myListMeasures.begin(); it != myListMeasures.end(); it++)
     {
         cout<<"Timestamp stop !! == "<<asctime(localtime(&it->first)) <<endl;
     }*/

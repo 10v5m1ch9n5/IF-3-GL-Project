@@ -28,6 +28,9 @@ airQuality averageAirQuality(int valeur)
     //cout<<"valeur "<<valeur<<endl;
     switch (valeur)
     {
+    case 0:
+        return VeryGood;
+        break;
     case 1:
         return VeryGood;
         break;
@@ -91,8 +94,33 @@ void DataManipulation::listAllSensor() const
 {
 } // -----
 
-void DataManipulation::checkImpactAirCleaner(string airCleanerId, float radius)
+float DataManipulation::checkImpactedRadiusAirCleaner(string airCleanerId)
+{
+    float radius=0.1;
+    int valueBefore=0;
+    pair<int,int> quality;
+    quality = checkImpactAirCleaner(airCleanerId, radius);
+    while( (quality.first - quality.second)!= 0 || (quality.first==-1) )
+    {
+        //cout<<quality.first<<" | "<<radius<<" | "<<quality.second<<endl;
+        
+        valueBefore=quality.first;
+        radius+=0.1;
+        quality = checkImpactAirCleaner(airCleanerId, radius);
+    }
 
+    // condition qui permet de renvoyer 0 dans le cas où radius != 0 à cause du fait qu'il n'y
+    // avait pas de capteur dans le rayon.
+
+    if(valueBefore==-1)
+    {
+        return 0;
+    }
+
+    return radius;
+}
+
+pair<int,int> DataManipulation::checkImpactAirCleaner(string airCleanerId, float radius)
 {
     float longitude, latitude;
 
@@ -123,34 +151,44 @@ void DataManipulation::checkImpactAirCleaner(string airCleanerId, float radius)
         }
     }
 
-    cout<<"sensor in radius "<<sensorInRadius.size()<<endl;
+    //cout<<"sensor in radius "<<sensorInRadius.size()<<endl;
+
+    if(sensorInRadius.size()==0)
+    {
+        //dans le cas où il n'y a pas de sensor dans le rayon, on renvoie -1
+        return make_pair(-1,-1);
+    }
 
     float before=0;
     float after=0;
     for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
     {
-        cout<<"sensor id : "<<it->second->getSensorID()<<" | size list "<<it->second->getMeasure().size()<<endl;
-        cout<<endl<<"avant"<<endl<<endl;
+        //cout<<"sensor id : "<<it->second->getSensorID()<<" | size list "<<it->second->getMeasure().size()<<endl;
+        //cout<<endl<<"avant"<<endl<<endl;
+
         // -3600*24 pour avoir les analyses du dernier jour avant la début du air cleaner
         before+=it->second->getAirQuality(myAirCleaner->getTimeStampStart()-3600*24);
         
-        cout<<endl<<"apres"<<endl<<endl;
+        //cout<<endl<<"apres"<<endl<<endl;
+        
         // -3600*24 pour avoir les analyses du dernier jour avant la fin du air cleaner
         after+=it->second->getAirQuality(myAirCleaner->getTimeStampStop()-3600*24);
         
     }
 
-    cout<<"before : "<<before<<" | after : "<<after<<endl;
+    //cout<<"before : "<<before<<" | after : "<<after<<endl;
 
-    if(sensorInRadius.size()!=0)
-    {   
+    airQuality qualityBefore, qualityAfter;
 
-        airQuality qualityBefore = averageAirQuality(before/sensorInRadius.size());
 
-        airQuality qualityAfter = averageAirQuality(after/sensorInRadius.size());
-        cout<<"Qualite --plus c'est proche de 0 plus c'est bon--"<<endl<<"before : "<<qualityBefore<<" | after : "<<qualityAfter<<endl;
-    }
+    qualityBefore = averageAirQuality(before/sensorInRadius.size());
 
+    qualityAfter = averageAirQuality(after/sensorInRadius.size());
+
+    //cout<<"Qualite --plus c'est proche de 0 plus c'est bon--"<<endl<<"before : "<<qualityBefore<<" | after : "<<qualityAfter<<endl;
+
+
+    return make_pair(qualityBefore,qualityAfter);
 } // -----
 
 void DataManipulation::checkReliability(string userId)
