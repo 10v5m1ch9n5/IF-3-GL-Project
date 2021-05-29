@@ -3,6 +3,7 @@
 #include "../interface/DataManipulation.h"
 using namespace std;
 
+
 int main()
 {
 
@@ -40,6 +41,8 @@ int main()
     time_t time =  mktime(&day);
 
     cout<<"qualite : "<<test->verifyAreaAirQuality(1.2,46.2,1, time)<<endl;
+
+    test->listAllSensor();
     delete(test);
     return 0;
 }

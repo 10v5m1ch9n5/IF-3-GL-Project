@@ -74,7 +74,7 @@ airQuality averageAirQuality(int valeur)
 
 //----------------------------------------------------- Méthodes publiques
 
-float DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius, time_t time)
+int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius, time_t time)
 {
     map<string, Sensor*> sensorInRadius;
 
@@ -117,7 +117,7 @@ float DataManipulation::verifyAreaAirQuality(float longitude, float latitude, fl
         return -2;
     } else
     {
-        return valueToReturn/nbrSensor;
+        return averageAirQuality(valueToReturn/nbrSensor);
     }
 } // -----
 
@@ -130,9 +130,12 @@ void DataManipulation::findSimilarSensor(string sensorId)
 {
 } // -----
 
-void DataManipulation::listAllSensor() const
-
+void DataManipulation::listAllSensor() 
 {
+    for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
+    {
+        cout<<"id : "<<it->first<<" ; Latitude : "<<it->second->getLatitude()<<" ; longitude : "<<it->second->getLongitude()<<endl;
+    }   
 } // -----
 
 float DataManipulation::checkImpactedRadiusAirCleaner(string airCleanerId)
