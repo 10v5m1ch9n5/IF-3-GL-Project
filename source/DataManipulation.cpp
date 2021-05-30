@@ -28,6 +28,9 @@ airQuality averageAirQuality(int valeur)
     //cout<<"valeur "<<valeur<<endl;
     switch (valeur)
     {
+    case 0:
+        return VeryGood;
+        break;
     case 1:
         return VeryGood;
         break;
@@ -71,10 +74,51 @@ airQuality averageAirQuality(int valeur)
 
 //----------------------------------------------------- Méthodes publiques
 
-void DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius)
+int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius, time_t firstDay)
 {
+    map<string, Sensor*> sensorInRadius;
 
+    for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
+    {
+        if( pow(pow(it->second->getLatitude()-latitude,2)+pow(it->second->getLongitude()-longitude,2),0.5) <= radius )
+        {
+            sensorInRadius[it->first]=it->second;
+        }
+    }
 
+    int nbrSensor = sensorInRadius.size();
+
+    // dans le cas où il n'y a aucun capteur dans la zone on renvoit le code -1
+
+    if(nbrSensor==0)
+    {
+        return -1;
+    }
+
+    float valueSanity;
+    float valueToReturn=0;
+
+    for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
+    {        
+        valueSanity=it->second->getAirQuality(firstDay);
+
+        // Si valueSanity à la valuer -1 lors il n'y a aucune mesure pour ce capteur et pour ce temps donné 
+        if(valueSanity == -1){
+            nbrSensor -= 1;
+        } else {
+            valueToReturn+=valueSanity;
+        }
+    }
+
+    // si nbrSensor vaut 0 alors cela signifie qu'il n'y a aucune mesure qui correspond  
+    // à ce temps dans la zone, on renvoie le code -2
+    if(nbrSensor==0)
+    {
+        return -2;
+    } else
+    {
+        return averageAirQuality(valueToReturn/nbrSensor);
+    }
 } // -----
 
 void DataManipulation::verifyPointAirQuality(float longitude, float latitude)
@@ -86,13 +130,41 @@ void DataManipulation::findSimilarSensor(string sensorId)
 {
 } // -----
 
-void DataManipulation::listAllSensor() const
-
+void DataManipulation::listAllSensor() 
 {
+    for (std::map<string,Sensor*>::iterator it=this->myListSensors.begin(); it!=this->myListSensors.end(); ++it)
+    {
+        cout<<"id : "<<it->first<<" ; Latitude : "<<it->second->getLatitude()<<" ; longitude : "<<it->second->getLongitude()<<endl;
+    }   
 } // -----
 
-void DataManipulation::checkImpactAirCleaner(string airCleanerId, float radius)
+float DataManipulation::checkImpactedRadiusAirCleaner(string airCleanerId)
+{
+    float radius=0.1;
+    int valueBefore=0;
+    pair<int,int> quality;
+    quality = checkImpactAirCleaner(airCleanerId, radius);
+    while( (quality.first - quality.second)!= 0 || (quality.first==-1) )
+    {
+        //cout<<quality.first<<" | "<<radius<<" | "<<quality.second<<endl;
 
+        valueBefore=quality.first;
+        radius+=0.1;
+        quality = checkImpactAirCleaner(airCleanerId, radius);
+    }
+
+    // condition qui permet de renvoyer 0 dans le cas où radius != 0 à cause du fait qu'il n'y
+    // avait pas de capteur dans le rayon.
+
+    if(valueBefore==-1)
+    {
+        return 0;
+    }
+
+    return radius;
+}
+
+pair<int,int> DataManipulation::checkImpactAirCleaner(string airCleanerId, float radius)
 {
     float longitude, latitude;
 
@@ -123,29 +195,58 @@ void DataManipulation::checkImpactAirCleaner(string airCleanerId, float radius)
         }
     }
 
-    cout<<"sensor in radius "<<sensorInRadius.size()<<endl;
+    int nbrSensor = sensorInRadius.size();
+    //cout<<"sensor in radius "<<sensorInRadius.size()<<endl;
+
+    if(nbrSensor==0)
+    {
+        //dans le cas où il n'y a pas de sensor dans le rayon, on renvoie -1
+        return make_pair(-1,-1);
+    }
 
     float before=0;
     float after=0;
-    pair<float,float> res;
+    float value;
     for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
     {
-        cout<<"sensor id : "<<it->second->getSensorID()<<" | size list "<<it->second->getMeasure().size()<<endl;
-        res=it->second->getAirQuality(myAirCleaner->getTimeStampStart(), myAirCleaner->getTimeStampStop());
-        before+=res.first;
-        after+=res.second;
+        //cout<<"sensor id : "<<it->second->getSensorID()<<" | size list "<<it->second->getMeasure().size()<<endl;
+        //cout<<endl<<"avant"<<endl<<endl;
+
+        // -3600*24 pour avoir les analyses du dernier jour avant la début du air cleaner
+
+        value=it->second->getAirQuality(myAirCleaner->getTimeStampStart()-3600*24);
+        
+        if(value==-1){
+            nbrSensor -= 1;
+        }else{
+            before+=value;
+        }
+
+        //cout<<endl<<"apres"<<endl<<endl;
+        
+        // -3600*24 pour avoir les analyses du dernier jour avant la fin du air cleaner
+        value=it->second->getAirQuality(myAirCleaner->getTimeStampStop()-3600*24);
+
+        if(value==-1){
+            nbrSensor -= 1;
+        }else{
+            after+=value;
+        }
+        
     }
 
-    cout<<"before : "<<before<<" | after : "<<after<<endl;
+    //cout<<"before : "<<before<<" | after : "<<after<<endl;
 
-    if(sensorInRadius.size()!=0)
-    {
-        airQuality qualityBefore = averageAirQuality(before/sensorInRadius.size());
+    airQuality qualityBefore, qualityAfter;
 
-        airQuality qualityAfter = averageAirQuality(after/sensorInRadius.size());
-        cout<<"Qualite --plus c'est proche de 0 plus c'est bon--"<<endl<<"before : "<<qualityBefore<<" | after : "<<qualityAfter<<endl;
-    }
 
+    qualityBefore = averageAirQuality(before/nbrSensor);
+
+    qualityAfter = averageAirQuality(after/nbrSensor);
+
+    //cout<<"Qualite --plus c'est proche de 0 plus c'est bon--"<<endl<<"before : "<<qualityBefore<<" | after : "<<qualityAfter<<endl;
+
+    return make_pair(qualityBefore,qualityAfter);
 } // -----
 
 void DataManipulation::checkReliability(string userId)
@@ -183,12 +284,14 @@ DataManipulation::DataManipulation()
     string  id, nomEntreprise;
     time_t timestampStart, timestampStop;
     tm myDate;
+    myDate.tm_year = 0;
+    myDate.tm_mon = 0;
+    myDate.tm_mday =0;
+    myDate.tm_hour = 0;
+    myDate.tm_min = 0;
+    myDate.tm_sec =0;
     float lat, longi;
     int i = 0;
-    struct tm myDate1;
-    struct tm myDate2;
-    time_t timestamp1;
-    time_t timestamp2;
     if (cleanersFile.is_open())
     {
         while (getline(cleanersFile, line, ';'))
@@ -212,24 +315,37 @@ DataManipulation::DataManipulation()
                 //cout<<"long "<<longi<<endl;
                 break;
             case 3:
-                myDate.tm_year = stoi(line.substr(0,4));
-                myDate.tm_mon = stoi(line.substr(5,2));
+                cout<<line<<endl;
+                myDate.tm_year = stoi(line.substr(0,4))-1900;
+                myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
-                myDate.tm_hour = stoi(line.substr(11,2));
-                myDate.tm_min = stoi(line.substr(14,2));
-                myDate.tm_sec = stoi(line.substr(17,2));
+                //myDate.tm_hour = stoi(line.substr(11,2));
+                //myDate.tm_min = stoi(line.substr(14,2));
+                //myDate.tm_sec = stoi(line.substr(17,2));
+                myDate.tm_hour = 12;
+                myDate.tm_min = 0;   
+                myDate.tm_sec = 0; 
                 timestampStart = mktime( & myDate );
-                printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
-                //cout<<"start "<<start<<endl;
+                /*cout<<myDate.tm_year<<endl;
+                cout<<myDate.tm_mon<<endl;
+                cout<<myDate.tm_mday<<endl;
+                cout<<myDate.tm_hour<<endl;
+                cout<<myDate.tm_min<<endl;
+                cout<<myDate.tm_sec<<endl;
+                
+                printf( "Timestamp2 == %s\n", asctime(localtime(&timestampStart)) );*/
                 break;
             case 4:
 
-                myDate.tm_year = stoi(line.substr(0,4));
-                myDate.tm_mon = stoi(line.substr(5,2));
+                myDate.tm_year = stoi(line.substr(0,4))-1900;
+                myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
-                myDate.tm_hour = stoi(line.substr(11,2));
-                myDate.tm_min = stoi(line.substr(14,2));
-                myDate.tm_sec = stoi(line.substr(17,2));
+                //myDate.tm_hour = stoi(line.substr(11,2));
+                //myDate.tm_min = stoi(line.substr(14,2));
+                //myDate.tm_sec = stoi(line.substr(17,2));
+                myDate.tm_hour = 12;
+                myDate.tm_min = 0;   
+                myDate.tm_sec = 0; 
                 timestampStop = mktime( & myDate );
                 printf( "Timestamp == %s\n", asctime(localtime(&timestampStop)) );
                 //cout<<"stop "<<stop<<endl;
@@ -324,14 +440,12 @@ DataManipulation::DataManipulation()
     cout << "Données Attribute chargées" << endl;
     // measure
 
-    string timeStamp;
     float value;
 
     ifstream measuresFile("dataset/measurements.csv");
     //ifstream measuresFile("datasetTest/measurementsTest.csv");
     i = 0;
-    struct tm myDate;
-    time_t timestamp;
+
     if (measuresFile.is_open())
     {
         while (getline(measuresFile, line, ';'))
@@ -340,14 +454,21 @@ DataManipulation::DataManipulation()
             switch (i)
             {
             case 0:
-                myDate.tm_year = stoi(line.substr(0,4));
-                myDate.tm_mon = stoi(line.substr(5,2));
+
+                myDate.tm_year = stoi(line.substr(0,4))-1900;
+                myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
-                myDate.tm_hour = stoi(line.substr(11,2));
-                myDate.tm_min = stoi(line.substr(14,2));
-                myDate.tm_sec = stoi(line.substr(17,2));
+                //myDate.tm_hour = stoi(line.substr(11,2));
+                //myDate.tm_min = stoi(line.substr(14,2));
+                //myDate.tm_sec = stoi(line.substr(17,2));
+                myDate.tm_hour = 12;
+                myDate.tm_min = 0;   
+                myDate.tm_sec = 0; 
                 timestampStart = mktime( & myDate );
-                printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
+                //cout<<myDate.tm_year<<" "<<myDate.tm_mon<<" "<<myDate.tm_mday<<" "<<myDate.tm_hour<<" "<<myDate.tm_min<<" "<<myDate.tm_sec<<endl;
+                
+                //
+                //printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
                 //cout<<timeStamp<<endl;
                 break;
             case 1:

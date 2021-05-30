@@ -33,7 +33,7 @@ class DataManipulation
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    void verifyAreaAirQuality(float longitude, float latitude, float radius);
+    int verifyAreaAirQuality(float longitude, float latitude, float radius, time_t firstDay);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
@@ -54,14 +54,21 @@ public:
     // Contrat : 
     //
     
-    void listAllSensor() const;
+    void listAllSensor();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
     // Contrat : 
     //
 
-    void checkImpactAirCleaner(string airCleanerId, float radius);
+    pair<int,int> checkImpactAirCleaner(string airCleanerId, float radius);
+    // void type Méthode ( liste des paramètres );
+    // Mode d'emploi : 
+    //
+    // Contrat : 
+    //
+
+    float checkImpactedRadiusAirCleaner(string airCleanerId);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //

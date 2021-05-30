@@ -228,46 +228,39 @@ string Sensor::getSensorID()
     return sensorId;
 }
 
-pair<float,float> Sensor::getAirQuality(time_t timeStart, time_t timeStop)
+float Sensor::getAirQuality(time_t time)
 {
-    float qualityBefore=0;
-    float qualityAfter=0;
-
+    float quality=0;
+    int nbrMesure=0;
     typedef multimap<time_t,Measure*>::iterator MMAPIterator;
 
     pair<MMAPIterator, MMAPIterator> result;
     
-    result = myListMeasures.equal_range(timeStart);
+    result = myListMeasures.equal_range(time);
 
-    //cout<<timeStart<<" "<<timeStop<<endl;
+    // Dans le cas où on a trouvé aucune mesure correspondant au temps spécifié
+    if(result.first == result.second)
+    {
+        return -1;
+    }
 
     for(MMAPIterator it = result.first; it != result.second; it++)
     {
-        qualityBefore=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityBefore);
+        nbrMesure+=1;
+        quality=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), quality);
     } 
-    /* timeStop[6]=timeStart[6];
-    timeStop[8]=50;
-    timeStop[9]=56;
-    timeStop[11]=timeStart[11];
-    timeStop[12]=timeStart[12]; */
-     result = myListMeasures.equal_range(timeStop);
-
-    for(MMAPIterator it = result.first; it != result.second; it++)
+    /*cout<<"nbr mesure : "<<nbrMesure<<" quality : "<<quality/nbrMesure<<endl;
+    for(MMAPIterator it = myListMeasures.begin(); it != myListMeasures.end(); it++)
     {
-        qualityAfter=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), qualityAfter);
-    } 
-
-    pair<float,float> difference;
+        cout<<"Timestamp stop !! == "<<asctime(localtime(&it->first)) <<endl;
+    }*/
+    //cout<<"Timestamp stop ? == "<<asctime(localtime(&timeStop)) <<endl;
 
     //cout<<qualityBefore<<" | "<<qualityAfter<<endl;
 
-    difference.first=qualityBefore/4;
-
-    difference.second=qualityAfter/4;
-
     //cout<<difference.first<<" "<<difference.second<<endl;
 
-    return difference;
+    return quality/nbrMesure;
 }
 
 float Sensor::getLatitude()
@@ -294,6 +287,7 @@ multimap<time_t, Measure*> Sensor::getMeasure()
 void Sensor::addMeasure(string id, time_t time, float value, string attributeId, string unit, string description)
 {
     Measure * myMeasure = new Measure(id, time, value, attributeId, unit, description);
+    
     this->myListMeasures.insert(std::pair<int,Measure*>(time,myMeasure));
     
 }
