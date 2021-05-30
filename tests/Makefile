@@ -6,13 +6,14 @@ vpath %.h ../../interface
 vpath %.cpp ../../source
 vpath %.o ../
 
-testVerifyPointAirQuality.out: testVerifyPointAirQuality.o $(OFILESPROJ)
+pointAir.out: testVerifyPointAirQuality.o $(OFILESPROJ)
+	$(CXX) -o ../$@ $^
+
+areaAir.out: testVerifyAreaAirQuality.o $(OFILESPROJ)
 	$(CXX) -o ../$@ $^
 
 testVerifyPointAirQuality.o: testVerifyPointAirQuality.cpp
-
-$(OFILESPROJ):
-	echo "fichiers .o de AirWatcher non disponibles"
+testVerifyAreaAirQuality.o: testVerifyAreaAirQuality.cpp
 
 clean:
 	@rm -rf *.o *.out

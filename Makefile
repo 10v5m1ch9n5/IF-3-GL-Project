@@ -23,6 +23,9 @@ $(OFILES) : $(HFILES)
 
 all : $(TARGET).out
 
+testAreaAir:
+	$(MAKE) -C tests areaAir.out
+
 clean:
 	@echo "Nettoyage ..."
 	@rm -f *.out *.o
