@@ -26,6 +26,9 @@ all : $(TARGET).out
 testAreaAir:
 	$(MAKE) -C tests areaAir.out
 
+airCleaner:
+	$(MAKE) -C tests airCleaner.out
+
 clean:
 	@echo "Nettoyage ..."
 	@rm -f *.out *.o

@@ -6,14 +6,14 @@ vpath %.h ../../interface
 vpath %.cpp ../../source
 vpath %.o ../
 
-pointAir.out: testVerifyPointAirQuality.o $(OFILESPROJ)
-	$(CXX) -o ../$@ $^
-
 areaAir.out: testVerifyAreaAirQuality.o $(OFILESPROJ)
 	$(CXX) -o ../$@ $^
 
-testVerifyPointAirQuality.o: testVerifyPointAirQuality.cpp
+airCleaner.out: testCheckImpactAirCleaner.o $(OFILESPROJ)
+	$(CXX) -o ../$@ $^
+
 testVerifyAreaAirQuality.o: testVerifyAreaAirQuality.cpp
+testCheckImpactAirCleaner.o: testCheckImpactAirCleaner.cpp
 
 clean:
-	@rm -rf *.o *.out
+	@rm -rf *.o
