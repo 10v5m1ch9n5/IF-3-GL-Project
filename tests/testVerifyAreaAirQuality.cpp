@@ -9,7 +9,7 @@ int main()
     tm janv01;
     janv01.tm_sec = 0;
     janv01.tm_min = 0;
-    janv01.tm_hour = 12;
+    janv01.tm_hour = 11;
     janv01.tm_mday = 1; // Premier du mois
     janv01.tm_mon = 0; // Janvier
     janv01.tm_year = 119;
