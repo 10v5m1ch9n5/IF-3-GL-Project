@@ -33,7 +33,7 @@ class DataManipulation
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    int verifyAreaAirQuality(float longitude, float latitude, float radius, time_t firstDay);
+    int verifyAreaAirQuality(float longitude, float latitude, float radius, time_t firstDay, int nbrDay=1);
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
@@ -81,6 +81,11 @@ public:
     //
     // Contrat : 
     //
+
+//------------------------------------------------- Getter
+
+	map<int,string> getMapAirQuality();
+
 //------------------------------------------------- Surcharge d'opérateurs
 
 
@@ -106,10 +111,17 @@ protected:
   
 //----------------------------------------------------- Méthodes protégées
 //----------------------------------------------------- Attributs protégés
-  std::map<string,Sensor*> myListSensors;
-  std::map<string,AirCleaner*> myListAirCleaner;
-  //std::map<string,IndividualPerson> myListIndividualPerson;
-
+	std::map<string,Sensor*> myListSensors;
+	std::map<string,AirCleaner*> myListAirCleaner;
+	//std::map<string,IndividualPerson> myListIndividualPerson;
+	const std::map<int, string> mapAirQuality = {
+		{0,"VeryGood"},
+		{1,"Good"},
+		{2,"Average"},
+		{3,"Poor"},
+		{4,"Bad"},
+		{5,"VeryBad"}
+	};
 };
 
 //-------------------------------- Autres définitions dépendantes de <Catalogue>

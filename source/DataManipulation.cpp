@@ -74,7 +74,7 @@ airQuality averageAirQuality(int valeur)
 
 //----------------------------------------------------- Méthodes publiques
 
-int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius, time_t firstDay)
+int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, float radius, time_t firstDay, int nbrDay)
 {
     map<string, Sensor*> sensorInRadius;
 
@@ -86,11 +86,11 @@ int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, floa
         }
     }
 
-    int nbrSensor = sensorInRadius.size();
+    int nbrMesure = sensorInRadius.size()*nbrDay;
 
     // dans le cas où il n'y a aucun capteur dans la zone on renvoit le code -1
 
-    if(nbrSensor==0)
+    if(nbrMesure==0)
     {
         return -1;
     }
@@ -98,26 +98,29 @@ int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, floa
     float valueSanity;
     float valueToReturn=0;
 
-    for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
-    {        
-        valueSanity=it->second->getAirQuality(firstDay);
+    for(int i=0; i<nbrDay; i++)
+    {
+        for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
+        {        
+            valueSanity=it->second->getAirQuality(firstDay+i*3600*24);
 
-        // Si valueSanity à la valuer -1 lors il n'y a aucune mesure pour ce capteur et pour ce temps donné 
-        if(valueSanity == -1){
-            nbrSensor -= 1;
-        } else {
-            valueToReturn+=valueSanity;
+            // Si valueSanity à la valuer -1 lors il n'y a aucune mesure pour ce capteur et pour ce temps donné 
+            if(valueSanity == -1){
+                nbrMesure -= 1;
+            } else {
+                valueToReturn+=valueSanity;
+            }
         }
     }
 
-    // si nbrSensor vaut 0 alors cela signifie qu'il n'y a aucune mesure qui correspond  
+    // si nbrMesure vaut 0 alors cela signifie qu'il n'y a aucune mesure qui correspond  
     // à ce temps dans la zone, on renvoie le code -2
-    if(nbrSensor==0)
+    if(nbrMesure==0)
     {
         return -2;
     } else
     {
-        return averageAirQuality(valueToReturn/nbrSensor);
+        return averageAirQuality(valueToReturn/nbrMesure);
     }
 } // -----
 
@@ -254,6 +257,13 @@ void DataManipulation::checkReliability(string userId)
 {
 } // -----
 
+//------------------------------------------------- Getter
+
+map<int,string> DataManipulation::getMapAirQuality()
+{
+		return mapAirQuality;
+}
+
 //-------------------------------------------- Constructeurs - destructeur
 DataManipulation::~DataManipulation()
 {
@@ -287,9 +297,10 @@ DataManipulation::DataManipulation()
     myDate.tm_year = 0;
     myDate.tm_mon = 0;
     myDate.tm_mday =0;
-    myDate.tm_hour = 0;
+    myDate.tm_hour = 12;
     myDate.tm_min = 0;
     myDate.tm_sec =0;
+    mktime( & myDate );
     float lat, longi;
     int i = 0;
     if (cleanersFile.is_open())
@@ -298,7 +309,6 @@ DataManipulation::DataManipulation()
         {
             //remove \n from line
             line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
-            //cout<<"LINE "<<line<<endl;
             
             switch (i)
             {
@@ -315,40 +325,19 @@ DataManipulation::DataManipulation()
                 //cout<<"long "<<longi<<endl;
                 break;
             case 3:
-                cout<<line<<endl;
                 myDate.tm_year = stoi(line.substr(0,4))-1900;
                 myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
-                //myDate.tm_hour = stoi(line.substr(11,2));
-                //myDate.tm_min = stoi(line.substr(14,2));
-                //myDate.tm_sec = stoi(line.substr(17,2));
-                myDate.tm_hour = 12;
-                myDate.tm_min = 0;   
-                myDate.tm_sec = 0; 
                 timestampStart = mktime( & myDate );
-                /*cout<<myDate.tm_year<<endl;
-                cout<<myDate.tm_mon<<endl;
-                cout<<myDate.tm_mday<<endl;
-                cout<<myDate.tm_hour<<endl;
-                cout<<myDate.tm_min<<endl;
-                cout<<myDate.tm_sec<<endl;
                 
-                printf( "Timestamp2 == %s\n", asctime(localtime(&timestampStart)) );*/
                 break;
             case 4:
 
                 myDate.tm_year = stoi(line.substr(0,4))-1900;
                 myDate.tm_mon = stoi(line.substr(5,2))-1;
-                myDate.tm_mday = stoi(line.substr(8,2));
-                //myDate.tm_hour = stoi(line.substr(11,2));
-                //myDate.tm_min = stoi(line.substr(14,2));
-                //myDate.tm_sec = stoi(line.substr(17,2));
-                myDate.tm_hour = 12;
-                myDate.tm_min = 0;   
-                myDate.tm_sec = 0; 
+                myDate.tm_mday = stoi(line.substr(8,2)); 
                 timestampStop = mktime( & myDate );
-                printf( "Timestamp == %s\n", asctime(localtime(&timestampStop)) );
-                //cout<<"stop "<<stop<<endl;
+
                 this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, timestampStart, timestampStop)));
                 break;
             default:
@@ -450,7 +439,7 @@ DataManipulation::DataManipulation()
     {
         while (getline(measuresFile, line, ';'))
         {
-              line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+            line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
             switch (i)
             {
             case 0:
@@ -458,12 +447,6 @@ DataManipulation::DataManipulation()
                 myDate.tm_year = stoi(line.substr(0,4))-1900;
                 myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
-                //myDate.tm_hour = stoi(line.substr(11,2));
-                //myDate.tm_min = stoi(line.substr(14,2));
-                //myDate.tm_sec = stoi(line.substr(17,2));
-                myDate.tm_hour = 12;
-                myDate.tm_min = 0;   
-                myDate.tm_sec = 0; 
                 timestampStart = mktime( & myDate );
                 //cout<<myDate.tm_year<<" "<<myDate.tm_mon<<" "<<myDate.tm_mday<<" "<<myDate.tm_hour<<" "<<myDate.tm_min<<" "<<myDate.tm_sec<<endl;
                 
