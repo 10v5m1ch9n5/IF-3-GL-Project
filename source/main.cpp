@@ -17,7 +17,7 @@ int main()
     pair<int,int> resultPair;
     float radiusResult;
     int value;
-    char userInput;
+    char userInput='\0';
     string id;
     float radius, longitude, latitude;
     int nbrDay, year, day, month;
@@ -27,7 +27,7 @@ int main()
     {
         cout<<endl<<"press 1 - see the list of sensors"<<endl<<"press 2 - see the list of AirCleaner"<<endl;
         cout<<"press 3 - check impact AirCleaner"<<endl<<"press 4 - check impacted radius by AirCleaner"<<endl;
-        cout<<"press 5 - verify area air quality"<<endl<<"press q - to quit"<<endl;
+        cout<<"press 5 - verify area air quality"<<endl<<"press q - quit"<<endl;
         cin >> userInput;
 
         switch (userInput)
@@ -59,7 +59,7 @@ int main()
                 break;
             
             default:
-                cout<<endl<<"radius : "<<radius<<" before d'execution : "<<test->getMapAirQuality()[resultPair.first]<<" | after : "<<test->getMapAirQuality()[resultPair.second]<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
+                cout<<endl<<"radius : "<<radius<<" quality before : "<<test->getMapAirQuality()[resultPair.first]<<" | quality after : "<<test->getMapAirQuality()[resultPair.second]<<" | execution time : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
                 break;
             }
             break;
@@ -75,7 +75,7 @@ int main()
                 cout<<endl<<"--wrong cleaner id--"<<endl;
                 break;         
             default:
-                cout<<endl<<"radius impacted : "<<radiusResult<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
+                cout<<endl<<"radius impacted : "<<radiusResult<<" | execution time : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
                 break;
             }
             break;
@@ -126,7 +126,7 @@ int main()
                 break;
 
             default:
-                cout<<"qualite : "<<test->getMapAirQuality()[value]<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
+                cout<<"air quality : "<<test->getMapAirQuality()[value]<<" | execution time : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
                 break;
             }
             break;

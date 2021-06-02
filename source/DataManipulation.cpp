@@ -104,7 +104,7 @@ int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, floa
         {        
             valueSanity=it->second->getAirQuality(firstDay+i*3600*24);
 
-            // Si valueSanity à la valuer -1 lors il n'y a aucune mesure pour ce capteur et pour ce temps donné 
+            // Si valueSanity à la valeur -1, alors il n'y a aucune mesure pour ce capteur et pour ce temps donné 
             if(valueSanity == -1){
                 nbrMesure -= 1;
             } else {
@@ -156,12 +156,13 @@ float DataManipulation::checkImpactedRadiusAirCleaner(string airCleanerId)
     pair<int,int> quality;
     quality = checkImpactAirCleaner(airCleanerId, radius);
 
-    // Mauvais CLeaner id
-    
+    // Mauvais CLeaner id, on retourne le code -3
+
     if(quality.first==-3)
     {
         return -3;
     }
+
     while( (quality.first - quality.second)!= 0 || (quality.first==-1) )
     {
         //cout<<quality.first<<" | "<<radius<<" | "<<quality.second<<endl;
