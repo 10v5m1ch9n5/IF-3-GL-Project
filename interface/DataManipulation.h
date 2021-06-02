@@ -84,7 +84,7 @@ public:
 
 //------------------------------------------------- Getter
 
-	map<int,string> getMapAirQuality();
+	map<int,string> getMapAirQuality() const;
 
 //------------------------------------------------- Surcharge d'opérateurs
 

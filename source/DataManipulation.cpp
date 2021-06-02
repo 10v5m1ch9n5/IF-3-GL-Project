@@ -259,7 +259,7 @@ void DataManipulation::checkReliability(string userId)
 
 //------------------------------------------------- Getter
 
-map<int,string> DataManipulation::getMapAirQuality()
+map<int,string> DataManipulation::getMapAirQuality() const
 {
 		return mapAirQuality;
 }
