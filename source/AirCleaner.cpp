@@ -14,7 +14,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "../interface/AirCleaner.h"
-
+#include <iostream>
 using namespace std;
 
 //--------------------------------------------------------------- Fonction 
@@ -26,13 +26,13 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-int AirCleaner::getLatitude()
+float AirCleaner::getLatitude()
 {
     return latitude;
 }
 
     
-int AirCleaner::getLongitude()
+float AirCleaner::getLongitude()
 {
     return longitude;
 }

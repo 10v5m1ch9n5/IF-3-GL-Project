@@ -31,14 +31,14 @@ class AirCleaner
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    int getLatitude();
+    float getLatitude();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
     // Contrat : 
     //
     
-  	int getLongitude();
+  	float getLongitude();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //

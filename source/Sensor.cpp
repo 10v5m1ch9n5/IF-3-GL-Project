@@ -249,16 +249,6 @@ float Sensor::getAirQuality(time_t time)
         nbrMesure+=1;
         quality=calcSingleAirQuality(it->second->getAttribute()->getAttributeId(), it->second->getValue(), quality);
     } 
-    /*cout<<"nbr mesure : "<<nbrMesure<<" quality : "<<quality/nbrMesure<<endl;
-    for(MMAPIterator it = myListMeasures.begin(); it != myListMeasures.end(); it++)
-    {
-        cout<<"Timestamp stop !! == "<<asctime(localtime(&it->first)) <<endl;
-    }*/
-    //cout<<"Timestamp stop ? == "<<asctime(localtime(&timeStop)) <<endl;
-
-    //cout<<qualityBefore<<" | "<<qualityAfter<<endl;
-
-    //cout<<difference.first<<" "<<difference.second<<endl;
 
     return quality/nbrMesure;
 }
@@ -273,7 +263,7 @@ float Sensor::getLongitude()
     return longitude;
 }
 
-int Sensor::getUserID()
+string Sensor::getUserID()
 {
     return userID;
 }
@@ -304,7 +294,7 @@ Sensor:: ~Sensor()
         delete(it->second);
 }
 
-Sensor::Sensor(string sensorID, float latitude, float longitude, int userID)
+Sensor::Sensor(string sensorID, float latitude, float longitude, string userID)
 {
     #ifdef MAP
         cout << "Appel au constructeur de Sensor" << endl;
