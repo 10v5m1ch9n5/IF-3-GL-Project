@@ -24,12 +24,12 @@ $(OFILES) : $(HFILES)
 all : $(TARGET).out
 
 # test de la qualité de l'air dans une zone
-areaAir:
-	$(MAKE) -C tests areaAir.out
+testAreaAir:
+	$(MAKE) -C tests testAreaAir.out
 
 # test de l'impact d'un AirCleaner
-airCleaner:
-	$(MAKE) -C tests airCleaner.out
+testAirCleaner:
+	$(MAKE) -C tests testAirCleaner.out
 
 clean:
 	@echo "Nettoyage ..."
