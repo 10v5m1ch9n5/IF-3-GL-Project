@@ -7,9 +7,13 @@ using namespace std;
 int main()
 {
     clock_t t1, t2;
-
+    
+    t1 = clock();
     DataManipulation * test = new DataManipulation();
+    t2 = clock();
+    cout<<"duree d'execution du parser de data : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
 
+    time_t time;
     pair<int,int> resultPair;
     float radiusResult;
     int value;
@@ -17,7 +21,7 @@ int main()
     string id;
     float radius, longitude, latitude;
     int nbrDay, year, day, month;
-    time_t time;
+    
     cout<<"Bienvenue dans l'application AirWatcher"<<endl;
     while(userInput!='q')
     {
@@ -55,7 +59,7 @@ int main()
                 break;
             
             default:
-                cout<<endl<<"radius : "<<radius<<" before d'execution : "<<test->getMapAirQuality()[resultPair.first]<<" | after : "<<test->getMapAirQuality()[resultPair.second]<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
+                cout<<endl<<"radius : "<<radius<<" before d'execution : "<<test->getMapAirQuality()[resultPair.first]<<" | after : "<<test->getMapAirQuality()[resultPair.second]<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
                 break;
             }
             break;
@@ -71,7 +75,7 @@ int main()
                 cout<<endl<<"--wrong cleaner id--"<<endl;
                 break;         
             default:
-                cout<<endl<<"radius impacted : "<<radiusResult<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
+                cout<<endl<<"radius impacted : "<<radiusResult<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
                 break;
             }
             break;
@@ -122,7 +126,7 @@ int main()
                 break;
 
             default:
-                cout<<"qualite : "<<test->getMapAirQuality()[value]<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
+                cout<<"qualite : "<<test->getMapAirQuality()[value]<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<" s"<<endl;
                 break;
             }
             break;
