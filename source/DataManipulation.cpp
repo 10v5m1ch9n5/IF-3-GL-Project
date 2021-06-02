@@ -67,7 +67,6 @@ airQuality averageAirQuality(int valeur)
     }
 }
 
-
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -103,7 +102,11 @@ int DataManipulation::verifyAreaAirQuality(float longitude, float latitude, floa
         for (std::map<string,Sensor*>::iterator it=sensorInRadius.begin(); it!=sensorInRadius.end(); ++it)
         {        
             valueSanity=it->second->getAirQuality(firstDay+i*3600*24);
-
+            string userId=it->second->getUserID();
+            if(userId.compare("\0")!=0)
+            {
+                myListIndividualPerson[userId]->addScore();
+            }
             // Si valueSanity à la valeur -1, alors il n'y a aucune mesure pour ce capteur et pour ce temps donné 
             if(valueSanity == -1){
                 nbrMesure -= 1;
@@ -146,6 +149,14 @@ void DataManipulation::listAllAirCleaner()
     for (std::map<string,AirCleaner*>::iterator it=this->myListAirCleaner.begin(); it!=this->myListAirCleaner.end(); ++it)
     {
         cout<<"id : "<<it->first<<" ; Latitude : "<<it->second->getLatitude()<<" ; longitude : "<<it->second->getLongitude()<<endl;
+    }   
+} // -----
+
+void DataManipulation::listAllIndividualPerson() 
+{
+    for (std::map<string,IndividualPerson*>::iterator it=this->myListIndividualPerson.begin(); it!=this->myListIndividualPerson.end(); ++it)
+    {
+        cout<<"id : "<<it->first<<" ; Reliable : "<<it->second->getReliability()<<" ; Score : "<<it->second->getScore()<<endl;
     }   
 } // -----
 
@@ -242,7 +253,11 @@ pair<int,int> DataManipulation::checkImpactAirCleaner(string airCleanerId, float
             before+=value;
         }
 
-        //cout<<endl<<"apres"<<endl<<endl;
+        string userId=it->second->getUserID();
+        if(userId.compare("\0")!=0)
+        {
+            myListIndividualPerson[userId]->addScore();
+        }
         
         // -3600*24 pour avoir les analyses du dernier jour avant la fin du air cleaner
         value=it->second->getAirQuality(myAirCleaner->getTimeStampStop()-3600*24);
@@ -300,6 +315,9 @@ DataManipulation::~DataManipulation()
 
     //delete airCleaner
     for (std::map<string,AirCleaner*>::iterator it=this->myListAirCleaner.begin(); it!=this->myListAirCleaner.end(); ++it)
+        delete(it->second);
+
+    for (std::map<string,IndividualPerson*>::iterator it=this->myListIndividualPerson.begin(); it!=this->myListIndividualPerson.end(); ++it)
         delete(it->second);
 }
 
@@ -400,7 +418,7 @@ DataManipulation::DataManipulation()
             case 2:
                 longi = stof(line);
                 //cout<<longi<<endl;
-                this->myListSensors.insert(std::pair<string, Sensor *>(id, new Sensor(id, lat, longi, "0")));
+                this->myListSensors.insert(std::pair<string, Sensor *>(id, new Sensor(id, lat, longi)));
                 break;
             default:
                 cout << "error" << endl;
@@ -459,7 +477,7 @@ DataManipulation::DataManipulation()
     float value;
 
     ifstream measuresFile("dataset/measurements.csv");
-    //ifstream measuresFile("datasetTest/measurementsTest.csv");
+
     i = 0;
 
     if (measuresFile.is_open())
@@ -508,6 +526,40 @@ DataManipulation::DataManipulation()
     else cout << "Unable to open file" << endl;
     cout << "Données Mesures chargées" << endl;
 
+    ifstream userFile("dataset/users.csv");
+
+    i = 0;
+
+    string userId, sensorId;
+
+    if (userFile.is_open())
+    {
+        while (getline(userFile, line, ';'))
+        {
+            line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
+            switch (i)
+            {
+            case 0:
+                userId = line;
+
+                break;
+            case 1:
+                sensorId=line;
+                myListSensors[sensorId]->setUser(userId);
+                this->myListIndividualPerson.insert(std::pair<string, IndividualPerson *>(userId, new IndividualPerson(userId)));
+                break;
+
+            default:
+                cout << "error" << endl;
+                break;
+            }
+            i = (i + 1) % 2;
+            
+        }
+        userFile.close();
+    }
+    else cout << "Unable to open file" << endl;
+    cout << "Données individual user chargées" << endl;
 }
 //------------------------------------------------------------------ PRIVE
 

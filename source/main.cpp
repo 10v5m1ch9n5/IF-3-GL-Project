@@ -25,9 +25,9 @@ int main()
     cout<<"Bienvenue dans l'application AirWatcher"<<endl;
     while(userInput!='q')
     {
-        cout<<endl<<"press 1 - see the list of sensors"<<endl<<"press 2 - see the list of AirCleaner"<<endl;
-        cout<<"press 3 - check impact AirCleaner"<<endl<<"press 4 - check impacted radius by AirCleaner"<<endl;
-        cout<<"press 5 - verify area air quality"<<endl<<"press q - quit"<<endl;
+        cout<<endl<<"press 1 - see the list of sensors"<<endl<<"press 2 - see the list of individual user"<<endl<<"press 3 - see the list of AirCleaner"<<endl;
+        cout<<"press 4 - check impact AirCleaner"<<endl<<"press 5 - check impacted radius by AirCleaner"<<endl;
+        cout<<"press 6 - verify area air quality"<<endl<<"press q - quit"<<endl;
         cin >> userInput;
 
         switch (userInput)
@@ -36,9 +36,12 @@ int main()
             test->listAllSensor();
             break;
         case '2':
-            test->listAllAirCleaner();
+            test->listAllIndividualPerson();
             break;
         case '3':
+            test->listAllAirCleaner();
+            break;
+        case '4':
             cout<<"enter a cleanerId"<<endl;          
             cin >> id;
             cout<<"enter a radius (example : 0.6)"<<endl;
@@ -63,7 +66,7 @@ int main()
                 break;
             }
             break;
-        case '4':
+        case '5':
             cout<<"enter a cleanerId"<<endl;          
             cin >> id;
             t1 = clock();
@@ -79,7 +82,7 @@ int main()
                 break;
             }
             break;
-        case '5':
+        case '6':
             tm date;
             cout<<"enter a longitude (example : 1.2)"<<endl;          
             cin >> longitude;

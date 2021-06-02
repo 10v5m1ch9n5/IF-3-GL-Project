@@ -15,7 +15,7 @@
 #include <map>
 
 #include "Sensor.h"
-//#include "IndividualPerson.h"
+#include "IndividualPerson.h"
 #include "AirCleaner.h"
 //------------------------------------------------------------- Constantes
 
@@ -62,6 +62,13 @@ public:
     //
 
     void listAllAirCleaner();
+    // void type Méthode ( liste des paramètres );
+    // Mode d'emploi : 
+    //
+    // Contrat : 
+    //
+
+    void listAllIndividualPerson();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi : 
     //
@@ -120,7 +127,7 @@ protected:
 //----------------------------------------------------- Attributs protégés
 	std::map<string,Sensor*> myListSensors;
 	std::map<string,AirCleaner*> myListAirCleaner;
-	//std::map<string,IndividualPerson> myListIndividualPerson;
+	std::map<string,IndividualPerson*> myListIndividualPerson;
 	const std::map<int, string> mapAirQuality = {
 		{0,"VeryGood"},
 		{1,"Good"},

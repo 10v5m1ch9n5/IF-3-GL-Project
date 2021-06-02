@@ -268,6 +268,10 @@ string Sensor::getUserID()
     return userID;
 }
 
+void Sensor::setUser(string userId)
+{
+    userID=userId;
+}
 
 multimap<time_t, Measure*> Sensor::getMeasure()
 {
@@ -294,7 +298,7 @@ Sensor:: ~Sensor()
         delete(it->second);
 }
 
-Sensor::Sensor(string sensorID, float latitude, float longitude, string userID)
+Sensor::Sensor(string sensorID, float latitude, float longitude)
 {
     #ifdef MAP
         cout << "Appel au constructeur de Sensor" << endl;
@@ -302,6 +306,6 @@ Sensor::Sensor(string sensorID, float latitude, float longitude, string userID)
     this->sensorId = sensorID;
     this->latitude = latitude;
     this->longitude = longitude;
-    this->userID = userID;
+    this->userID = "\0";
 
 }

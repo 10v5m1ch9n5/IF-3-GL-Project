@@ -53,6 +53,8 @@ public:
     // Contrat :
     //
 
+    void setUser(string userId);
+
     string getUserID();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
@@ -82,7 +84,7 @@ public:
     // Contrat :
     //
 
-    Sensor(string sensorId, float latitude, float longitude, string userID);
+    Sensor(string sensorId, float latitude, float longitude);
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
