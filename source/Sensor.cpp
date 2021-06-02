@@ -273,7 +273,7 @@ float Sensor::getLongitude()
     return longitude;
 }
 
-int Sensor::getUserID()
+string Sensor::getUserID()
 {
     return userID;
 }
@@ -304,7 +304,7 @@ Sensor:: ~Sensor()
         delete(it->second);
 }
 
-Sensor::Sensor(string sensorID, float latitude, float longitude, int userID)
+Sensor::Sensor(string sensorID, float latitude, float longitude, string userID)
 {
     #ifdef MAP
         cout << "Appel au constructeur de Sensor" << endl;

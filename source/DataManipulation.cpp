@@ -396,7 +396,7 @@ DataManipulation::DataManipulation()
             case 2:
                 longi = stof(line);
                 //cout<<longi<<endl;
-                this->myListSensors.insert(std::pair<string, Sensor *>(id, new Sensor(id, lat, longi, 0)));
+                this->myListSensors.insert(std::pair<string, Sensor *>(id, new Sensor(id, lat, longi, "0")));
                 break;
             default:
                 cout << "error" << endl;

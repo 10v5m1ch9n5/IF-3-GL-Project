@@ -53,7 +53,7 @@ public:
     // Contrat :
     //
 
-    int getUserID();
+    string getUserID();
     // void type Méthode ( liste des paramètres );
     // Mode d'emploi :
     //
@@ -82,7 +82,7 @@ public:
     // Contrat :
     //
 
-    Sensor(string sensorId, float latitude, float longitude, int userID);
+    Sensor(string sensorId, float latitude, float longitude, string userID);
     // Mode d'emploi (constructeur de copie) :
     //
     // Contrat :
@@ -99,7 +99,7 @@ private:
     string sensorId;
     float latitude;
     float longitude;
-    int userID;
+    string userID;
     multimap<time_t,Measure*> myListMeasures;
 };
 
