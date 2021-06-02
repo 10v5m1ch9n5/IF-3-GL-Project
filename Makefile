@@ -23,9 +23,11 @@ $(OFILES) : $(HFILES)
 
 all : $(TARGET).out
 
-testAreaAir:
+# test de la qualité de l'air dans une zone
+areaAir:
 	$(MAKE) -C tests areaAir.out
 
+# test de l'impact d'un AirCleaner
 airCleaner:
 	$(MAKE) -C tests airCleaner.out
 
