@@ -10,57 +10,129 @@ int main()
 
     DataManipulation * test = new DataManipulation();
 
-    pair<int,int> result;
+    pair<int,int> resultPair;
+    float radiusResult;
+    int value;
+    char userInput;
+    string id;
+    float radius, longitude, latitude;
+    int nbrDay, year, day, month;
+    time_t time;
+    cout<<"Bienvenue dans l'application AirWatcher"<<endl;
+    while(userInput!='q')
+    {
+        cout<<endl<<"press 1 - see the list of sensors"<<endl<<"press 2 - see the list of AirCleaner"<<endl;
+        cout<<"press 3 - check impact AirCleaner"<<endl<<"press 4 - check impacted radius by AirCleaner"<<endl;
+        cout<<"press 5 - verify area air quality"<<endl<<"press q - to quit"<<endl;
+        cin >> userInput;
 
-    cout<<endl<<"----- "<<0.5<<" -----"<<endl<<endl;
+        switch (userInput)
+        {
+        case '1':
+            test->listAllSensor();
+            break;
+        case '2':
+            test->listAllAirCleaner();
+            break;
+        case '3':
+            cout<<"enter a cleanerId"<<endl;          
+            cin >> id;
+            cout<<"enter a radius (example : 0.6)"<<endl;
+            cin >> radius;
+            t1 = clock();
+            resultPair=test->checkImpactAirCleaner(id,radius);
+            t2 = clock();
+            switch (resultPair.first)
+            {
+            case -1:
+                cout<<endl<<"--no sensor in this area--"<<endl;
+                break;
+            case -2:
+                cout<<endl<<"--no measure during this time--"<<endl;
+                break;
+            case -3:
+                cout<<endl<<"--wrong cleaner id--"<<endl;
+                break;
+            
+            default:
+                cout<<endl<<"radius : "<<radius<<" before d'execution : "<<test->getMapAirQuality()[resultPair.first]<<" | after : "<<test->getMapAirQuality()[resultPair.second]<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
+                break;
+            }
+            break;
+        case '4':
+            cout<<"enter a cleanerId"<<endl;          
+            cin >> id;
+            t1 = clock();
+            radiusResult=test->checkImpactedRadiusAirCleaner(id);
+            t2 = clock();
+            switch ((int)radiusResult)
+            {
+            case -3:
+                cout<<endl<<"--wrong cleaner id--"<<endl;
+                break;         
+            default:
+                cout<<endl<<"radius impacted : "<<radiusResult<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
+                break;
+            }
+            break;
+        case '5':
+            tm date;
+            cout<<"enter a longitude (example : 1.2)"<<endl;          
+            cin >> longitude;
+            cout<<"enter a latitude (example : 43.2)"<<endl;
+            cin >> latitude;
+            cout<<"enter a radius (example : 1.2)"<<endl;
+            cin >> radius;
+            cout<<"enter a year (example : 2019 must be > 1900)"<<endl;
+            cin >> year;
+            date.tm_year = year - 1900;
+            cout<<"enter a month (example : 1 for january | between 1 & 12)"<<endl;
+            cin >> month;
+            while(month<1 || month>12)
+            {
+                cout<<"enter a VALID month ( > 1 && < 12 )"<<endl;
+                cin >> month;
+            }
+            date.tm_mon= month - 1;
+            cout<<"enter day of a month (example : 22)"<<endl;
+            cin >> day;
+            date.tm_mday = day;
+            date.tm_hour=12;
+            date.tm_min=0;
+            date.tm_sec=0;
+            date.tm_isdst = -1;
+            time = mktime(&date);
+            cout<<"enter nbr of day to analyse after the date you just entered ( > 1 )"<<endl;
+            cin >> nbrDay;
+            while(nbrDay<1)
+            {
+                cout<<"enter a VALID nbr of day ( > 1 )"<<endl;
+                cin >> nbrDay;
+            }
+            t1 = clock();
+            value = test->verifyAreaAirQuality(longitude,latitude,radius, time, nbrDay);
+            t2 = clock();
+            switch (value)
+            {
+            case -1:
+                cout<<endl<<"--no sensor in this area--"<<endl;
+                break;
+            case -2:
+                cout<<endl<<"--no measure during this time : "<<asctime(localtime(&time));
+                break;
 
-    cout<<"check impact air cleaner 0"<<endl;
-    t1 = clock();
-    result=test->checkImpactAirCleaner("Cleaner0",0.5);
-    t2 = clock();
-    cout<<"before : "<<test->getMapAirQuality()[result.first]<<" | after : "<<test->getMapAirQuality()[result.second]<<" duree : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
-
-    cout<<"check impact air cleaner 1"<<endl;
-    t1 = clock();
-    result=test->checkImpactAirCleaner("Cleaner1",0.5);
-    t2 = clock();
-    cout<<"before : "<<test->getMapAirQuality()[result.first]<<" | after : "<<test->getMapAirQuality()[result.second]<<" duree : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
-
-    cout<<endl<<"----- radius impacted -----"<<endl<<endl;
-
-    cout<<"check impact air cleaner 0"<<endl;
-    t1 = clock();
-    cout<<"radius : "<<test->checkImpactedRadiusAirCleaner("Cleaner0")<<" duree : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
-    t2 = clock();
-
-    cout<<"check impact air cleaner 1"<<endl;
-    t1 = clock();
-    cout<<"radius : "<<test->checkImpactedRadiusAirCleaner("Cleaner1")<<" duree : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
-    t2 = clock();
-
-    cout<<endl<<"vérifier la qualité de l'air dans une zone"<<endl;
-
-    tm day;
-    day.tm_year=119;
-    day.tm_mday=23;
-    day.tm_mon=8;
-    day.tm_hour=12;
-    day.tm_sec=0;
-    day.tm_min=0;
-    time_t time =  mktime(&day);
-
-    t1 = clock();
-    int value = test->verifyAreaAirQuality(1.2,46.2,1, time);
-    t2 = clock();
-
-    cout<<"qualite : "<<test->getMapAirQuality()[value]<<" duree : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
-
-    t1 = clock();
-    value = test->verifyAreaAirQuality(1.2,46.2,1, time);
-    t2 = clock();
-
-    cout<<"qualite : "<<test->getMapAirQuality()[value]<<" duree : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
-    
+            default:
+                cout<<"qualite : "<<test->getMapAirQuality()[value]<<" | duree d'execution : "<<(float)(t2-t1)/CLOCKS_PER_SEC<<endl;
+                break;
+            }
+            break;
+        case 'q':
+            break;
+        default:
+            cout<<"wrong input, try again with one of the number / q proposed to you"<<endl;
+            break;
+        }
+    }
     delete(test);
     return 0;
 }

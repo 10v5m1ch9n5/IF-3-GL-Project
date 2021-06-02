@@ -141,12 +141,24 @@ void DataManipulation::listAllSensor()
     }   
 } // -----
 
+void DataManipulation::listAllAirCleaner() 
+{
+    for (std::map<string,AirCleaner*>::iterator it=this->myListAirCleaner.begin(); it!=this->myListAirCleaner.end(); ++it)
+    {
+        cout<<"id : "<<it->first<<" ; Latitude : "<<it->second->getLatitude()<<" ; longitude : "<<it->second->getLongitude()<<endl;
+    }   
+} // -----
+
 float DataManipulation::checkImpactedRadiusAirCleaner(string airCleanerId)
 {
     float radius=0.1;
     int valueBefore=0;
     pair<int,int> quality;
     quality = checkImpactAirCleaner(airCleanerId, radius);
+    if(quality.first==-3)
+    {
+        return -3;
+    }
     while( (quality.first - quality.second)!= 0 || (quality.first==-1) )
     {
         //cout<<quality.first<<" | "<<radius<<" | "<<quality.second<<endl;
@@ -180,6 +192,7 @@ pair<int,int> DataManipulation::checkImpactAirCleaner(string airCleanerId, float
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
+        return make_pair(-3,-3);
     }
     
     longitude = myAirCleaner->getLongitude();
@@ -247,9 +260,15 @@ pair<int,int> DataManipulation::checkImpactAirCleaner(string airCleanerId, float
 
     qualityAfter = averageAirQuality(after/nbrSensor);
 
-    //cout<<"Qualite --plus c'est proche de 0 plus c'est bon--"<<endl<<"before : "<<qualityBefore<<" | after : "<<qualityAfter<<endl;
-
-    return make_pair(qualityBefore,qualityAfter);
+    // si nbrSensor vaut 0 alors cela signifie qu'il n'y a aucune mesure qui correspond  
+    // à ce temps dans la zone, on renvoie le code -2
+    if(nbrSensor==0)
+    {
+        return make_pair(-2,-2);
+    } else
+    {
+        return make_pair(qualityBefore,qualityAfter);
+    }
 } // -----
 
 void DataManipulation::checkReliability(string userId)
@@ -300,6 +319,7 @@ DataManipulation::DataManipulation()
     myDate.tm_hour = 12;
     myDate.tm_min = 0;
     myDate.tm_sec =0;
+    myDate.tm_isdst = -1;
     mktime( & myDate );
     float lat, longi;
     int i = 0;
@@ -318,26 +338,29 @@ DataManipulation::DataManipulation()
                 break;
             case 1:
                 lat = stof(line);
-                //cout<<"lat "<<lat<<endl;
                 break;
             case 2:
                 longi = stof(line);
-                //cout<<"long "<<longi<<endl;
                 break;
             case 3:
                 myDate.tm_year = stoi(line.substr(0,4))-1900;
                 myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
-                timestampStart = mktime( & myDate );
-                
+                myDate.tm_hour = 12;
+                myDate.tm_min = 0;
+                myDate.tm_sec =0;
+                myDate.tm_isdst = -1;
+                timestampStart = mktime( & myDate );                
                 break;
             case 4:
-
                 myDate.tm_year = stoi(line.substr(0,4))-1900;
                 myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2)); 
+                myDate.tm_hour = 12;
+                myDate.tm_min = 0;
+                myDate.tm_sec =0;
+                myDate.tm_isdst = -1;
                 timestampStop = mktime( & myDate );
-
                 this->myListAirCleaner.insert(std::pair<string, AirCleaner *>(id, new AirCleaner(id, lat, longi, timestampStart, timestampStop)));
                 break;
             default:
@@ -447,12 +470,14 @@ DataManipulation::DataManipulation()
                 myDate.tm_year = stoi(line.substr(0,4))-1900;
                 myDate.tm_mon = stoi(line.substr(5,2))-1;
                 myDate.tm_mday = stoi(line.substr(8,2));
+                myDate.tm_hour = 12;
+                myDate.tm_min = 0;
+                myDate.tm_sec =0;
+                myDate.tm_isdst = -1;
                 timestampStart = mktime( & myDate );
                 //cout<<myDate.tm_year<<" "<<myDate.tm_mon<<" "<<myDate.tm_mday<<" "<<myDate.tm_hour<<" "<<myDate.tm_min<<" "<<myDate.tm_sec<<endl;
                 
-                //
-                //printf( "Timestamp == %s\n", asctime(localtime(&timestampStart)) );
-                //cout<<timeStamp<<endl;
+                //cout<<asctime(localtime(&timestampStart))<<endl;
                 break;
             case 1:
                 id = line;
