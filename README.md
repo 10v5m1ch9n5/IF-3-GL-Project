@@ -24,23 +24,23 @@ GNU Make 4.2.1
 
 ### système d'exploitation utilisé 
 
--ubuntu 
--mac os
+- ubuntu 
+- mac os
 
 ### procédure pour lancer le programme
 
--se placer à la racine du dossier IF-3-GL-PROJECT
--sur son invité de commande lancer la commande suivante : make
--pour exécuter le programme taper la commande suivante dans votre invité de commande : ./AirWatcher.out
+- se placer à la racine du dossier IF-3-GL-PROJECT
+- sur son invité de commande lancer la commande suivante : make
+- pour exécuter le programme taper la commande suivante dans votre invité de commande : ./AirWatcher.out
 
 ### procédure pour lancer un test
 
--se placer à la racine du dossier IF-3-GL-PROJECT
--sur son invité de commande lancer l'une des commandes suivantes : make testAreaAir | make testAirCleaner
--pour exécuter le test taper l'une des commandes suivantes dans votre invité de commande : ./areaAir.out | ./airCleaner.out
+- se placer à la racine du dossier IF-3-GL-PROJECT
+- sur son invité de commande lancer l'une des commandes suivantes : make testAreaAir | make testAirCleaner
+- pour exécuter le test taper l'une des commandes suivantes dans votre invité de commande : ./areaAir.out | ./airCleaner.out
 
 ### nettoyer le projet
 
--se placer à la racine du dossier IF-3-GL-PROJECT
--sur son invité de commande lancer la commande suivante : make clean
+- se placer à la racine du dossier IF-3-GL-PROJECT
+- sur son invité de commande lancer la commande suivante : make clean
 
