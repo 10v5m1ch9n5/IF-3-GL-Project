@@ -155,6 +155,9 @@ float DataManipulation::checkImpactedRadiusAirCleaner(string airCleanerId)
     int valueBefore=0;
     pair<int,int> quality;
     quality = checkImpactAirCleaner(airCleanerId, radius);
+
+    // Mauvais CLeaner id
+    
     if(quality.first==-3)
     {
         return -3;
