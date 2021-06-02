@@ -6,14 +6,15 @@ vpath %.h ../../interface
 vpath %.cpp ../../source
 vpath %.o ../
 
-areaAir.out: testVerifyAreaAirQuality.o $(OFILESPROJ)
+testAreaAir.out: testVerifyAreaAirQuality.o $(OFILESPROJ)
 	$(CXX) -o ../$@ $^
 
-airCleaner.out: testCheckImpactAirCleaner.o $(OFILESPROJ)
+testAirCleaner.out: testCheckImpactAirCleaner.o $(OFILESPROJ)
 	$(CXX) -o ../$@ $^
 
 testVerifyAreaAirQuality.o: testVerifyAreaAirQuality.cpp
 testCheckImpactAirCleaner.o: testCheckImpactAirCleaner.cpp
 
 clean:
+	@echo "Nettoyage des tests ..."
 	@rm -rf *.o

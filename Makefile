@@ -23,14 +23,17 @@ $(OFILES) : $(HFILES)
 
 all : $(TARGET).out
 
-testAreaAir:
-	$(MAKE) -C tests areaAir.out
+# test de la qualité de l'air dans une zone
+testAreaAir: all
+	$(MAKE) -C tests testAreaAir.out
 
-airCleaner:
-	$(MAKE) -C tests airCleaner.out
+# test de l'impact d'un AirCleaner
+testAirCleaner: all
+	$(MAKE) -C tests testAirCleaner.out
 
 clean:
 	@echo "Nettoyage ..."
 	@rm -f *.out *.o
+	@$(MAKE) -C tests clean --no-print-directory
 
 .PHONY: clean all
