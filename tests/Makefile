@@ -16,4 +16,5 @@ testVerifyAreaAirQuality.o: testVerifyAreaAirQuality.cpp
 testCheckImpactAirCleaner.o: testCheckImpactAirCleaner.cpp
 
 clean:
+	@echo "Nettoyage des tests ..."
 	@rm -rf *.o
